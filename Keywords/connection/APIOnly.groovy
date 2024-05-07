@@ -158,4 +158,19 @@ class APIOnly {
 		}
 		listdata
 	}
+	
+	@Keyword
+	getIdMsUser(Connection conn, String NIK) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select id_ms_user from am_msuser where hashed_id_no = encode(sha256('" + NIK + "'), 'hex')")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
 }

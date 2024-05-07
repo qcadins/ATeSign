@@ -1,0 +1,2009 @@
+{
+    "status": {
+        "code": 0
+    },
+    "listBalanceTenant": [
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "FVRF",
+            "balanceTypeName": "Face Verify",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "FVRF",
+            "balanceTypeName": "Face Verify",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "FVRF",
+            "balanceTypeName": "Face Verify",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "FVRF",
+            "balanceTypeName": "Face Verify",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "FVRF",
+            "balanceTypeName": "Face Verify",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "FVRF",
+            "balanceTypeName": "Face Verify",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "FVRF",
+            "balanceTypeName": "Face Verify",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "FVRF",
+            "balanceTypeName": "Face Verify",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "FVRF",
+            "balanceTypeName": "Face Verify",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "FVRF",
+            "balanceTypeName": "Face Verify",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "FVRF",
+            "balanceTypeName": "Face Verify",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "SGN",
+            "balanceTypeName": "Sign",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "SGN",
+            "balanceTypeName": "Sign",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "SGN",
+            "balanceTypeName": "Sign",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "SGN",
+            "balanceTypeName": "Sign",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "SGN",
+            "balanceTypeName": "Sign",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "SGN",
+            "balanceTypeName": "Sign",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "SGN",
+            "balanceTypeName": "Sign",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "SGN",
+            "balanceTypeName": "Sign",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "SGN",
+            "balanceTypeName": "Sign",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "SGN",
+            "balanceTypeName": "Sign",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "SGN",
+            "balanceTypeName": "Sign",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "OTP",
+            "balanceTypeName": "OTP",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "OTP",
+            "balanceTypeName": "OTP",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "OTP",
+            "balanceTypeName": "OTP",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "OTP",
+            "balanceTypeName": "OTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "OTP",
+            "balanceTypeName": "OTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "OTP",
+            "balanceTypeName": "OTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "OTP",
+            "balanceTypeName": "OTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "OTP",
+            "balanceTypeName": "OTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "OTP",
+            "balanceTypeName": "OTP",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "OTP",
+            "balanceTypeName": "OTP",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "OTP",
+            "balanceTypeName": "OTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "VRF",
+            "balanceTypeName": "Verification",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "VRF",
+            "balanceTypeName": "Verification",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "VRF",
+            "balanceTypeName": "Verification",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "VRF",
+            "balanceTypeName": "Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "VRF",
+            "balanceTypeName": "Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "VRF",
+            "balanceTypeName": "Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "VRF",
+            "balanceTypeName": "Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "VRF",
+            "balanceTypeName": "Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "VRF",
+            "balanceTypeName": "Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "VRF",
+            "balanceTypeName": "Verification",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "VRF",
+            "balanceTypeName": "Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "DOC",
+            "balanceTypeName": "Document",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "DOC",
+            "balanceTypeName": "Document",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "DOC",
+            "balanceTypeName": "Document",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "DOC",
+            "balanceTypeName": "Document",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "DOC",
+            "balanceTypeName": "Document",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "DOC",
+            "balanceTypeName": "Document",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "DOC",
+            "balanceTypeName": "Document",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "DOC",
+            "balanceTypeName": "Document",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "DOC",
+            "balanceTypeName": "Document",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "DOC",
+            "balanceTypeName": "Document",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "DOC",
+            "balanceTypeName": "Document",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "OCR_KTP",
+            "balanceTypeName": "OCR KTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "OCR_KTP",
+            "balanceTypeName": "OCR KTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "OCR_KTP",
+            "balanceTypeName": "OCR KTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "OCR_KTP",
+            "balanceTypeName": "OCR KTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "OCR_KTP",
+            "balanceTypeName": "OCR KTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "OCR_KTP",
+            "balanceTypeName": "OCR KTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "OCR_KTP",
+            "balanceTypeName": "OCR KTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "OCR_KTP",
+            "balanceTypeName": "OCR KTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "OCR_KTP",
+            "balanceTypeName": "OCR KTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "OCR_KTP",
+            "balanceTypeName": "OCR KTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "OCR_KTP",
+            "balanceTypeName": "OCR KTP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "OCR_NPWP",
+            "balanceTypeName": "OCR NPWP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "OCR_NPWP",
+            "balanceTypeName": "OCR NPWP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "OCR_NPWP",
+            "balanceTypeName": "OCR NPWP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "OCR_NPWP",
+            "balanceTypeName": "OCR NPWP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "OCR_NPWP",
+            "balanceTypeName": "OCR NPWP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "OCR_NPWP",
+            "balanceTypeName": "OCR NPWP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "OCR_NPWP",
+            "balanceTypeName": "OCR NPWP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "OCR_NPWP",
+            "balanceTypeName": "OCR NPWP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "OCR_NPWP",
+            "balanceTypeName": "OCR NPWP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "OCR_NPWP",
+            "balanceTypeName": "OCR NPWP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "OCR_NPWP",
+            "balanceTypeName": "OCR NPWP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "DUKBIO",
+            "balanceTypeName": "Dukcapil Biometrik",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "DUKBIO",
+            "balanceTypeName": "Dukcapil Biometrik",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "DUKBIO",
+            "balanceTypeName": "Dukcapil Biometrik",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "DUKBIO",
+            "balanceTypeName": "Dukcapil Biometrik",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "DUKBIO",
+            "balanceTypeName": "Dukcapil Biometrik",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "DUKBIO",
+            "balanceTypeName": "Dukcapil Biometrik",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "DUKBIO",
+            "balanceTypeName": "Dukcapil Biometrik",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "DUKBIO",
+            "balanceTypeName": "Dukcapil Biometrik",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "DUKBIO",
+            "balanceTypeName": "Dukcapil Biometrik",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "DUKBIO",
+            "balanceTypeName": "Dukcapil Biometrik",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "DUKBIO",
+            "balanceTypeName": "Dukcapil Biometrik",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "SDT_POSTPAID",
+            "balanceTypeName": "Stamp Duty Postpaid",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "SDT_POSTPAID",
+            "balanceTypeName": "Stamp Duty Postpaid",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "SDT_POSTPAID",
+            "balanceTypeName": "Stamp Duty Postpaid",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "SDT_POSTPAID",
+            "balanceTypeName": "Stamp Duty Postpaid",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "SDT_POSTPAID",
+            "balanceTypeName": "Stamp Duty Postpaid",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "SDT_POSTPAID",
+            "balanceTypeName": "Stamp Duty Postpaid",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "SDT_POSTPAID",
+            "balanceTypeName": "Stamp Duty Postpaid",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "SDT_POSTPAID",
+            "balanceTypeName": "Stamp Duty Postpaid",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "SDT_POSTPAID",
+            "balanceTypeName": "Stamp Duty Postpaid",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "SDT_POSTPAID",
+            "balanceTypeName": "Stamp Duty Postpaid",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "SDT_POSTPAID",
+            "balanceTypeName": "Stamp Duty Postpaid",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "SMS",
+            "balanceTypeName": "SMS Notif",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "SMS",
+            "balanceTypeName": "SMS Notif",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "SMS",
+            "balanceTypeName": "SMS Notif",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "SMS",
+            "balanceTypeName": "SMS Notif",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "SMS",
+            "balanceTypeName": "SMS Notif",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "SMS",
+            "balanceTypeName": "SMS Notif",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "SMS",
+            "balanceTypeName": "SMS Notif",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "SMS",
+            "balanceTypeName": "SMS Notif",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "SMS",
+            "balanceTypeName": "SMS Notif",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "SMS",
+            "balanceTypeName": "SMS Notif",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "SMS",
+            "balanceTypeName": "SMS Notif",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "FACECOMPARE",
+            "balanceTypeName": "Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "FACECOMPARE",
+            "balanceTypeName": "Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "FACECOMPARE",
+            "balanceTypeName": "Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "FACECOMPARE",
+            "balanceTypeName": "Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "FACECOMPARE",
+            "balanceTypeName": "Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "FACECOMPARE",
+            "balanceTypeName": "Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "FACECOMPARE",
+            "balanceTypeName": "Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "FACECOMPARE",
+            "balanceTypeName": "Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "FACECOMPARE",
+            "balanceTypeName": "Face Compare",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "FACECOMPARE",
+            "balanceTypeName": "Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "FACECOMPARE",
+            "balanceTypeName": "Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "SDT",
+            "balanceTypeName": "Stamp Duty",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "SDT",
+            "balanceTypeName": "Stamp Duty",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "SDT",
+            "balanceTypeName": "Stamp Duty",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "SDT",
+            "balanceTypeName": "Stamp Duty",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "SDT",
+            "balanceTypeName": "Stamp Duty",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "SDT",
+            "balanceTypeName": "Stamp Duty",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "SDT",
+            "balanceTypeName": "Stamp Duty",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "SDT",
+            "balanceTypeName": "Stamp Duty",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "SDT",
+            "balanceTypeName": "Stamp Duty",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "SDT",
+            "balanceTypeName": "Stamp Duty",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "SDT",
+            "balanceTypeName": "Stamp Duty",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "LIVENESS_FACECOMPARE",
+            "balanceTypeName": "Liveness Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "LIVENESS_FACECOMPARE",
+            "balanceTypeName": "Liveness Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "LIVENESS_FACECOMPARE",
+            "balanceTypeName": "Liveness Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "LIVENESS_FACECOMPARE",
+            "balanceTypeName": "Liveness Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "LIVENESS_FACECOMPARE",
+            "balanceTypeName": "Liveness Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "LIVENESS_FACECOMPARE",
+            "balanceTypeName": "Liveness Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "LIVENESS_FACECOMPARE",
+            "balanceTypeName": "Liveness Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "LIVENESS_FACECOMPARE",
+            "balanceTypeName": "Liveness Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "LIVENESS_FACECOMPARE",
+            "balanceTypeName": "Liveness Face Compare",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "LIVENESS_FACECOMPARE",
+            "balanceTypeName": "Liveness Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "LIVENESS_FACECOMPARE",
+            "balanceTypeName": "Liveness Face Compare",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "PNBP",
+            "balanceTypeName": "PNBP",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "PNBP",
+            "balanceTypeName": "PNBP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "PNBP",
+            "balanceTypeName": "PNBP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "PNBP",
+            "balanceTypeName": "PNBP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "PNBP",
+            "balanceTypeName": "PNBP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "PNBP",
+            "balanceTypeName": "PNBP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "PNBP",
+            "balanceTypeName": "PNBP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "PNBP",
+            "balanceTypeName": "PNBP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "PNBP",
+            "balanceTypeName": "PNBP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "PNBP",
+            "balanceTypeName": "PNBP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "PNBP",
+            "balanceTypeName": "PNBP",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "OCR_BPKB",
+            "balanceTypeName": "OCR BPKB",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "OCR_BPKB",
+            "balanceTypeName": "OCR BPKB",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "OCR_BPKB",
+            "balanceTypeName": "OCR BPKB",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "OCR_BPKB",
+            "balanceTypeName": "OCR BPKB",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "OCR_BPKB",
+            "balanceTypeName": "OCR BPKB",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "OCR_BPKB",
+            "balanceTypeName": "OCR BPKB",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "OCR_BPKB",
+            "balanceTypeName": "OCR BPKB",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "OCR_BPKB",
+            "balanceTypeName": "OCR BPKB",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "OCR_BPKB",
+            "balanceTypeName": "OCR BPKB",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "OCR_BPKB",
+            "balanceTypeName": "OCR BPKB",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "OCR_BPKB",
+            "balanceTypeName": "OCR BPKB",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "OCR_KK",
+            "balanceTypeName": "OCR KK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "OCR_KK",
+            "balanceTypeName": "OCR KK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "OCR_KK",
+            "balanceTypeName": "OCR KK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "OCR_KK",
+            "balanceTypeName": "OCR KK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "OCR_KK",
+            "balanceTypeName": "OCR KK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "OCR_KK",
+            "balanceTypeName": "OCR KK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "OCR_KK",
+            "balanceTypeName": "OCR KK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "OCR_KK",
+            "balanceTypeName": "OCR KK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "OCR_KK",
+            "balanceTypeName": "OCR KK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "OCR_KK",
+            "balanceTypeName": "OCR KK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "OCR_KK",
+            "balanceTypeName": "OCR KK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "OCR_STNK",
+            "balanceTypeName": "OCR STNK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "OCR_STNK",
+            "balanceTypeName": "OCR STNK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "OCR_STNK",
+            "balanceTypeName": "OCR STNK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "OCR_STNK",
+            "balanceTypeName": "OCR STNK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "OCR_STNK",
+            "balanceTypeName": "OCR STNK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "OCR_STNK",
+            "balanceTypeName": "OCR STNK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "OCR_STNK",
+            "balanceTypeName": "OCR STNK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "OCR_STNK",
+            "balanceTypeName": "OCR STNK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "OCR_STNK",
+            "balanceTypeName": "OCR STNK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "OCR_STNK",
+            "balanceTypeName": "OCR STNK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "OCR_STNK",
+            "balanceTypeName": "OCR STNK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "PHONE_ACTIVE_CHECK",
+            "balanceTypeName": "PHONE ACTIVE CHECK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "PHONE_ACTIVE_CHECK",
+            "balanceTypeName": "PHONE ACTIVE CHECK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "PHONE_ACTIVE_CHECK",
+            "balanceTypeName": "PHONE ACTIVE CHECK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "PHONE_ACTIVE_CHECK",
+            "balanceTypeName": "PHONE ACTIVE CHECK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "PHONE_ACTIVE_CHECK",
+            "balanceTypeName": "PHONE ACTIVE CHECK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "PHONE_ACTIVE_CHECK",
+            "balanceTypeName": "PHONE ACTIVE CHECK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "PHONE_ACTIVE_CHECK",
+            "balanceTypeName": "PHONE ACTIVE CHECK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "PHONE_ACTIVE_CHECK",
+            "balanceTypeName": "PHONE ACTIVE CHECK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "PHONE_ACTIVE_CHECK",
+            "balanceTypeName": "PHONE ACTIVE CHECK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "PHONE_ACTIVE_CHECK",
+            "balanceTypeName": "PHONE ACTIVE CHECK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "PHONE_ACTIVE_CHECK",
+            "balanceTypeName": "PHONE ACTIVE CHECK",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "QE_TEST",
+            "balanceTypeName": "QE TEST",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "QE_TEST",
+            "balanceTypeName": "QE TEST",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "QE_TEST",
+            "balanceTypeName": "QE TEST",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "QE_TEST",
+            "balanceTypeName": "QE TEST",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "QE_TEST",
+            "balanceTypeName": "QE TEST",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "QE_TEST",
+            "balanceTypeName": "QE TEST",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "QE_TEST",
+            "balanceTypeName": "QE TEST",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "QE_TEST",
+            "balanceTypeName": "QE TEST",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "QE_TEST",
+            "balanceTypeName": "QE TEST",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "QE_TEST",
+            "balanceTypeName": "QE TEST",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "QE_TEST",
+            "balanceTypeName": "QE TEST",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "${balanceTypeCode}",
+            "balanceTypeName": "${balanceTypeName}",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "TEXT_VRF",
+            "balanceTypeName": "Text Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "TEXT_VRF",
+            "balanceTypeName": "Text Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "TEXT_VRF",
+            "balanceTypeName": "Text Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "TEXT_VRF",
+            "balanceTypeName": "Text Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "TEXT_VRF",
+            "balanceTypeName": "Text Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "TEXT_VRF",
+            "balanceTypeName": "Text Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "TEXT_VRF",
+            "balanceTypeName": "Text Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "TEXT_VRF",
+            "balanceTypeName": "Text Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "TEXT_VRF",
+            "balanceTypeName": "Text Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "TEXT_VRF",
+            "balanceTypeName": "Text Verification",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "TEXT_VRF",
+            "balanceTypeName": "Text Verification",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "WA",
+            "balanceTypeName": "WhatsApp Message",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "WA",
+            "balanceTypeName": "WhatsApp Message",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "WA",
+            "balanceTypeName": "WhatsApp Message",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "WA",
+            "balanceTypeName": "WhatsApp Message",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "WA",
+            "balanceTypeName": "WhatsApp Message",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "WA",
+            "balanceTypeName": "WhatsApp Message",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "WA",
+            "balanceTypeName": "WhatsApp Message",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "WA",
+            "balanceTypeName": "WhatsApp Message",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "WA",
+            "balanceTypeName": "WhatsApp Message",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "WA",
+            "balanceTypeName": "WhatsApp Message",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "WA",
+            "balanceTypeName": "WhatsApp Message",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "LIVENESS",
+            "balanceTypeName": "Liveness",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "LIVENESS",
+            "balanceTypeName": "Liveness",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "LIVENESS",
+            "balanceTypeName": "Liveness",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "LIVENESS",
+            "balanceTypeName": "Liveness",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "LIVENESS",
+            "balanceTypeName": "Liveness",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "LIVENESS",
+            "balanceTypeName": "Liveness",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "LIVENESS",
+            "balanceTypeName": "Liveness",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "LIVENESS",
+            "balanceTypeName": "Liveness",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "LIVENESS",
+            "balanceTypeName": "Liveness",
+            "isActive": "1"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "LIVENESS",
+            "balanceTypeName": "Liveness",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "LIVENESS",
+            "balanceTypeName": "Liveness",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "OCR_REKKORAN_BCA",
+            "balanceTypeName": "OCR Rek. Koran BCA",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "OCR_REKKORAN_BCA",
+            "balanceTypeName": "OCR Rek. Koran BCA",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "OCR_REKKORAN_BCA",
+            "balanceTypeName": "OCR Rek. Koran BCA",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "OCR_REKKORAN_BCA",
+            "balanceTypeName": "OCR Rek. Koran BCA",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "OCR_REKKORAN_BCA",
+            "balanceTypeName": "OCR Rek. Koran BCA",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "OCR_REKKORAN_BCA",
+            "balanceTypeName": "OCR Rek. Koran BCA",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "OCR_REKKORAN_BCA",
+            "balanceTypeName": "OCR Rek. Koran BCA",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "OCR_REKKORAN_BCA",
+            "balanceTypeName": "OCR Rek. Koran BCA",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "OCR_REKKORAN_BCA",
+            "balanceTypeName": "OCR Rek. Koran BCA",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "OCR_REKKORAN_BCA",
+            "balanceTypeName": "OCR Rek. Koran BCA",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "OCR_REKKORAN_BCA",
+            "balanceTypeName": "OCR Rek. Koran BCA",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "VIDA",
+            "vendorName": "VIDA",
+            "balanceTypeCode": "OCR_REKKORAN_MANDIRI",
+            "balanceTypeName": "OCR Rek. Koran Mandiri",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TKNAJ",
+            "vendorName": "TEKENAJA",
+            "balanceTypeCode": "OCR_REKKORAN_MANDIRI",
+            "balanceTypeName": "OCR Rek. Koran Mandiri",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PRIVY",
+            "vendorName": "PRIVY",
+            "balanceTypeCode": "OCR_REKKORAN_MANDIRI",
+            "balanceTypeName": "OCR Rek. Koran Mandiri",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DJP",
+            "vendorName": "Dirjen Pajak",
+            "balanceTypeCode": "OCR_REKKORAN_MANDIRI",
+            "balanceTypeName": "OCR Rek. Koran Mandiri",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "JATIS",
+            "vendorName": "Jatis",
+            "balanceTypeCode": "OCR_REKKORAN_MANDIRI",
+            "balanceTypeName": "OCR Rek. Koran Mandiri",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "INDR",
+            "vendorName": "INDOREG",
+            "balanceTypeCode": "OCR_REKKORAN_MANDIRI",
+            "balanceTypeName": "OCR Rek. Koran Mandiri",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "PERURI",
+            "vendorName": "Peruri",
+            "balanceTypeCode": "OCR_REKKORAN_MANDIRI",
+            "balanceTypeName": "OCR Rek. Koran Mandiri",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "SIGNAJ",
+            "vendorName": "SIGNAJ",
+            "balanceTypeCode": "OCR_REKKORAN_MANDIRI",
+            "balanceTypeName": "OCR Rek. Koran Mandiri",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "ESG",
+            "vendorName": "ESIGN/ADINS",
+            "balanceTypeCode": "OCR_REKKORAN_MANDIRI",
+            "balanceTypeName": "OCR Rek. Koran Mandiri",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "DIGI",
+            "vendorName": "DIGISIGN",
+            "balanceTypeCode": "OCR_REKKORAN_MANDIRI",
+            "balanceTypeName": "OCR Rek. Koran Mandiri",
+            "isActive": "0"
+        },
+        {
+            "vendorCode": "TEST",
+            "vendorName": "TEST VENDOR PSRE",
+            "balanceTypeCode": "OCR_REKKORAN_MANDIRI",
+            "balanceTypeName": "OCR Rek. Koran Mandiri",
+            "isActive": "0"
+        }
+    ]
+}

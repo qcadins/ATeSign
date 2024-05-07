@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebServiceRequestEntity>
+   <description></description>
+   <name>Edit Data Pengguna</name>
+   <tag></tag>
+   <elementGuidId>90f0932b-99cb-4a02-a531-9994f3c33b72</elementGuidId>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <autoUpdateContent>true</autoUpdateContent>
+   <connectionTimeout>-1</connectionTimeout>
+   <followRedirects>false</followRedirects>
+   <httpBody></httpBody>
+   <httpBodyContent>{
+  &quot;text&quot;: &quot;{\r\n    \&quot;audit\&quot;: {\r\n        \&quot;callerId\&quot;: \&quot;admin@adins\&quot;\r\n    },\r\n    \&quot;fullName\&quot;: \&quot;\&quot;,\r\n    \&quot;loginId\&quot;: \&quot;ANDY19012026@ESIGNHUB.MY.ID\&quot;,\r\n    \&quot;noKtp\&quot;: \&quot;\&quot;,\r\n    \&quot;noPhone\&quot;: \&quot;\&quot;,\r\n    \&quot;newEmail\&quot;: \&quot;ANDY19012025@ESIGNHUB.MY.ID\&quot;,\r\n    \&quot;address\&quot;: \&quot;\&quot;,\r\n    \&quot;isActive\&quot;: \&quot;1\&quot;,\r\n    \&quot;isRegist\&quot;: \&quot;1\&quot;,\r\n    \&quot;vendorCode\&quot;: \&quot;DIGI\&quot;\r\n}&quot;,
+  &quot;contentType&quot;: &quot;application/json&quot;,
+  &quot;charset&quot;: &quot;UTF-8&quot;
+}</httpBodyContent>
+   <httpBodyType>text</httpBodyType>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Content-Type</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>3ab5dc26-2a50-4892-9f4a-0454a5577ad5</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Accept</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>a450b72d-d484-4068-aeb3-fdc4310c3483</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Authorization</name>
+      <type>Main</type>
+      <value>Bearer ${token}</value>
+      <webElementGuid>4ec2af88-88ac-43a6-94c5-d43c075f896a</webElementGuid>
+   </httpHeaderProperties>
+   <katalonVersion>9.0.0</katalonVersion>
+   <maxResponseSize>-1</maxResponseSize>
+   <migratedVersion>5.4.1</migratedVersion>
+   <restRequestMethod>POST</restRequestMethod>
+   <restUrl>${base_url}/services/user/s/updateDataUser</restUrl>
+   <serviceType>RESTful</serviceType>
+   <soapBody></soapBody>
+   <soapHeader></soapHeader>
+   <soapRequestMethod></soapRequestMethod>
+   <soapServiceEndpoint></soapServiceEndpoint>
+   <soapServiceFunction></soapServiceFunction>
+   <socketTimeout>-1</socketTimeout>
+   <useServiceInfoFromWsdl>true</useServiceInfoFromWsdl>
+   <variables>
+      <defaultValue>GlobalVariable.base_url</defaultValue>
+      <description></description>
+      <id>5dbbf58d-ac85-4f7f-9d20-6782509f64f2</id>
+      <masked>false</masked>
+      <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>94ab716c-125a-442a-b53d-e03b8e51cac9</id>
+      <masked>false</masked>
+      <name>token</name>
+   </variables>
+   <wsdlAddress></wsdlAddress>
+</WebServiceRequestEntity>

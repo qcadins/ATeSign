@@ -88,7 +88,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     'verify user name'
                     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-                                    'fullName')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                    'fullName')).toString().toUpperCase(), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 					
 					'verify login id'
 					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
@@ -99,7 +99,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 									'roleCode')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 					'verify user status'
-					arrayMatch.add(WebUI.verifyMatch('1', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+					arrayMatch.add(WebUI.verifyMatch('Aktif', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 					'verify office code'
 					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(

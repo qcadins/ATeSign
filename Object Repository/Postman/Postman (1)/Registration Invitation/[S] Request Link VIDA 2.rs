@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebServiceRequestEntity>
+   <description></description>
+   <name>[S] Request Link VIDA 2</name>
+   <tag></tag>
+   <elementGuidId>fd2fd15f-82d3-4383-9e68-bf4bdd1cfa15</elementGuidId>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <autoUpdateContent>true</autoUpdateContent>
+   <connectionTimeout>-1</connectionTimeout>
+   <followRedirects>false</followRedirects>
+   <httpBody></httpBody>
+   <httpBodyContent>{
+  &quot;text&quot;: &quot;{\r\n    \&quot;audit\&quot;: {\r\n        \&quot;callerId\&quot;: \&quot;mobile\&quot;\r\n    },\r\n    \&quot;tenantCode\&quot;: \&quot;WOMF\&quot;,\r\n    \&quot;users\&quot;: [\r\n        {\r\n            \&quot;nama\&quot;: \&quot;UserBDAE\&quot;,\r\n            \&quot;tlp\&quot;: \&quot;081000991304\&quot;,\r\n            \&quot;email\&quot;: \&quot;VIDA.BDAE@ESIGNHUB.MY.ID\&quot;,\r\n            \&quot;jenisKelamin\&quot;: \&quot;F\&quot;,\r\n            \&quot;tmpLahir\&quot;: \&quot;BOGOR\&quot;,\r\n            \&quot;tglLahir\&quot;: \&quot;1980-01-01\&quot;,\r\n            \&quot;idKtp\&quot;: \&quot;3521000101801304\&quot;,\r\n            \&quot;provinsi\&quot;: \&quot;Jawa Barat\&quot;,\r\n            \&quot;kota\&quot;: \&quot;Bogor\&quot;,\r\n            \&quot;kecamatan\&quot;: \&quot;Bogor Selatan\&quot;,\r\n            \&quot;kelurahan\&quot;: \&quot;Baranangsiang\&quot;,\r\n            \&quot;kodePos\&quot;: \&quot;16140\&quot;,\r\n            \&quot;alamat\&quot;: \&quot;JL. SAWOKNA NO.1000 BANTAR KEMANG\&quot;,\r\n            \&quot;region\&quot;: \&quot;R1266\&quot;,\r\n            \&quot;office\&quot;: \&quot;O1266\&quot;,\r\n            \&quot;taskNo\&quot;: \&quot;TASK07A\&quot;,\r\n            \&quot;businessLine\&quot;: \&quot;\&quot;\r\n        }\r\n    ]\r\n}&quot;,
+  &quot;contentType&quot;: &quot;application/json&quot;,
+  &quot;charset&quot;: &quot;UTF-8&quot;
+}</httpBodyContent>
+   <httpBodyType>text</httpBodyType>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Content-Type</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>e2acad05-73ae-4a2c-8138-a4a4d06445b0</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>x-api-key</name>
+      <type>Main</type>
+      <value>ASDFGH@WOMF</value>
+      <webElementGuid>363684e8-f16e-466b-a054-7be2964fc447</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Authorization</name>
+      <type>Main</type>
+      <value>Bearer ${token}</value>
+      <webElementGuid>7d84b292-1fe2-48bc-99e5-ffcd4723bd3a</webElementGuid>
+   </httpHeaderProperties>
+   <katalonVersion>9.0.0</katalonVersion>
+   <maxResponseSize>-1</maxResponseSize>
+   <migratedVersion>5.4.1</migratedVersion>
+   <restRequestMethod>POST</restRequestMethod>
+   <restUrl>${sim_url}/services/user/s/generateInvitationLinkSecured</restUrl>
+   <serviceType>RESTful</serviceType>
+   <soapBody></soapBody>
+   <soapHeader></soapHeader>
+   <soapRequestMethod></soapRequestMethod>
+   <soapServiceEndpoint></soapServiceEndpoint>
+   <soapServiceFunction></soapServiceFunction>
+   <socketTimeout>-1</socketTimeout>
+   <useServiceInfoFromWsdl>true</useServiceInfoFromWsdl>
+   <variables>
+      <defaultValue>GlobalVariable.sim_url</defaultValue>
+      <description></description>
+      <id>4826b85f-04de-48a3-8198-884e3c55e725</id>
+      <masked>false</masked>
+      <name>sim_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>3bfa44e5-8fa1-436c-808b-fe6d4bff9924</id>
+      <masked>false</masked>
+      <name>token</name>
+   </variables>
+   <wsdlAddress></wsdlAddress>
+</WebServiceRequestEntity>

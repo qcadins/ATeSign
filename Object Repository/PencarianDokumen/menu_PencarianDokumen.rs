@@ -7,18 +7,18 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'sidebar-content main-menu-content ng')]/div[1]/ul/li[2]/a/span</value>
+         <value>//*[@href = '/inquiry']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[contains(@class, 'sidebar-content main-menu-content ng')]/div[1]/ul/li[2]/a/span</value>
-      <webElementGuid>625a56e8-5016-4f79-80df-2a069ec17843</webElementGuid>
+      <webElementGuid>71a8117d-6284-4898-92d8-c6e81564620d</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,14 @@
       <name>class</name>
       <type>Main</type>
       <value>sidebar-content main-menu-content ng</value>
-      <webElementGuid>a3fea5cf-e28f-4a80-b774-2e33a6187840</webElementGuid>
+      <webElementGuid>e38d7cdf-65d4-4d27-8602-d64ebe9b458a</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>href</name>
+      <type>Main</type>
+      <value>/inquiry</value>
+      <webElementGuid>fdd18001-e051-4065-8403-b38ddfbf6d82</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

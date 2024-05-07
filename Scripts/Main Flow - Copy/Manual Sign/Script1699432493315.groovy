@@ -298,7 +298,7 @@ for (looping = 0; looping < loopcase; looping++) {
             WebUI.delay(1)
 
             'Klik set tanda tangan'
-            WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
+            WebUI.enhancedClick(findTestObject('ManualSign/btn_setTandaTangan'))
 
             'click button lock signbox'
             WebUI.click(findTestObject('ManualSign/btn_LockSignBox'))

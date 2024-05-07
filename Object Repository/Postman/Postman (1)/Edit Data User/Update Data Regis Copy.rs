@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebServiceRequestEntity>
+   <description></description>
+   <name>Update Data Regis Copy</name>
+   <tag></tag>
+   <elementGuidId>08cdea09-bdb3-4939-86d5-7cc217851358</elementGuidId>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <autoUpdateContent>true</autoUpdateContent>
+   <connectionTimeout>-1</connectionTimeout>
+   <followRedirects>false</followRedirects>
+   <httpBody></httpBody>
+   <httpBodyContent>{
+  &quot;text&quot;: &quot;{\r\n    \&quot;audit\&quot;: {\r\n        \&quot;callerId\&quot;: \&quot;mobile\&quot;\r\n    },\r\n    \&quot;fullName\&quot; : \&quot;Andy ang a\&quot;,\r\n    \&quot;email\&quot; : \&quot;\&quot;,\r\n    \&quot;receiverDetail\&quot; : \&quot;081117162849\&quot;,\r\n    \&quot;oldRecieverDetail\&quot; : \&quot;081117162849\&quot;,\r\n    \&quot;phone\&quot; : \&quot;087123162843\&quot;,\r\n    \&quot;provinsi\&quot;          : \&quot;JAWA barat\&quot;,\r\n    \&quot;kota\&quot;              : \&quot;Kota Bekasi\&quot;,\r\n    \&quot;kecamatan\&quot;         : \&quot;Pondok Gede\&quot;,\r\n    \&quot;gender\&quot;            : \&quot;M\&quot;,\r\n    \&quot;kelurahan\&quot;         : \&quot;Jatibening Baru\&quot;,\r\n    \&quot;zipCode\&quot;           : \&quot;17412\&quot;,\r\n    \&quot;dateOfBirth\&quot;       : \&quot;15-06-2000\&quot;,\r\n    \&quot;placeOfBirth\&quot;      : \&quot;Bekasi\&quot;,\r\n    \&quot;idNo\&quot;              : \&quot;13524531232321\&quot;,\r\n    \&quot;address\&quot;           : \&quot;Jalan Felesia VI ab\&quot;\r\n}\r\n&quot;,
+  &quot;contentType&quot;: &quot;application/json&quot;,
+  &quot;charset&quot;: &quot;UTF-8&quot;
+}</httpBodyContent>
+   <httpBodyType>text</httpBodyType>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Content-Type</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>24848ba7-a7b1-4688-a71e-563028199ad9</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Accept</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>38110c13-bf72-4348-b6cc-dbe841242dbe</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Authorization</name>
+      <type>Main</type>
+      <value>Bearer ${token}</value>
+      <webElementGuid>b9d59ac3-86ff-42ce-b1a2-04c37c04af60</webElementGuid>
+   </httpHeaderProperties>
+   <katalonVersion>9.0.0</katalonVersion>
+   <maxResponseSize>-1</maxResponseSize>
+   <migratedVersion>5.4.1</migratedVersion>
+   <restRequestMethod>POST</restRequestMethod>
+   <restUrl>${base_url}/services/user/s/updateDataInvRegis</restUrl>
+   <serviceType>RESTful</serviceType>
+   <soapBody></soapBody>
+   <soapHeader></soapHeader>
+   <soapRequestMethod></soapRequestMethod>
+   <soapServiceEndpoint></soapServiceEndpoint>
+   <soapServiceFunction></soapServiceFunction>
+   <socketTimeout>-1</socketTimeout>
+   <useServiceInfoFromWsdl>true</useServiceInfoFromWsdl>
+   <variables>
+      <defaultValue>GlobalVariable.base_url</defaultValue>
+      <description></description>
+      <id>3ccf6f83-c282-45a8-bf6c-6d56bed817c4</id>
+      <masked>false</masked>
+      <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>4066a2f3-f53d-4752-a604-0577a2b5350d</id>
+      <masked>false</masked>
+      <name>token</name>
+   </variables>
+   <wsdlAddress></wsdlAddress>
+</WebServiceRequestEntity>

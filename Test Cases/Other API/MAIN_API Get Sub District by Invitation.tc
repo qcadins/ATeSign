@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Get Sub District by Invitation</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>05c77dac-d13a-413b-bfaf-e0a8dca4e37f</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>5e1c5963-bd84-4ae4-b5c2-f2d1753cc541</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>815b48c4-2971-45d2-bc4a-83fa6ea9a03b</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Get Subdistrict By Invitation'</defaultValue>
+      <description></description>
+      <id>5e1c5963-bd84-4ae4-b5c2-f2d1753cc541</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Get Subdistrict Invitation'</defaultValue>
+      <description></description>
+      <id>815b48c4-2971-45d2-bc4a-83fa6ea9a03b</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

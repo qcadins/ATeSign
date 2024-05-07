@@ -53,7 +53,6 @@ if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, ro
         SHA256IdNo = (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
             ';', -1)[GlobalVariable.indexUsed])
     }
-    
     'setting email service tenant'
     CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPathAPISignDocument).getValue(
             GlobalVariable.NumofColm, rowExcel('Setting Email Service')), SHA256IdNo)
@@ -64,6 +63,8 @@ String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conn
 
 if (vendor == 'null') {
     vendor = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Vendor'))
+} else {
+	vendor = GlobalVariable.Psre
 }
 
 if (vendor.equalsIgnoreCase('Digisign')) {
@@ -288,7 +289,7 @@ if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, r
 
 (GlobalVariable.eSignData['VerifikasiOTP']) = countOTP
 
-if (otp != null) {
+if (otp != null && GlobalVariable.FlagFailed == 0) {
     'check if mau menggunakan base64 untuk photo yang salah atau benar'
     if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use Base64 SelfPhoto (Sign External)')).split(
         ';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
@@ -373,8 +374,7 @@ if (otp != null) {
                 ' pada psre response dengan vendor DB ')
 
             signCount = CustomKeywords.'connection.APIFullService.getTotalSigner'(conneSign, (GlobalVariable.storeVar.keySet()[
-                [0]]).toString(), findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
-                    ';', -1)[GlobalVariable.indexUsed])
+                [0]]).toString(), GlobalVariable.storeVar[GlobalVariable.storeVar.keySet()[0]])
 
             'Loop untuk check db update sign. Maksimal 200 detik.'
             for (int v = 1; v <= GlobalVariable.LoopingPeriodSigning; v++) {
@@ -614,8 +614,7 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String documentId
 
     'Array result. Value dari db'
     result = CustomKeywords.'connection.APIFullService.getSign'(conneSign, (GlobalVariable.storeVar.keySet()[0]).toString(), 
-        findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
-            ';', -1)[GlobalVariable.indexUsed])
+        GlobalVariable.storeVar[GlobalVariable.storeVar.keySet()[0]])
 
     'verify qty dalam transaksi. Jika done = 1'
     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))

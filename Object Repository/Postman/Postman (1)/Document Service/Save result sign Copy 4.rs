@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebServiceRequestEntity>
+   <description></description>
+   <name>Save result sign Copy 4</name>
+   <tag></tag>
+   <elementGuidId>9e3ff6bd-4e30-4a2e-8fe1-1de7bbda77e0</elementGuidId>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <autoUpdateContent>true</autoUpdateContent>
+   <connectionTimeout>-1</connectionTimeout>
+   <followRedirects>false</followRedirects>
+   <httpBody></httpBody>
+   <httpBodyContent>{
+  &quot;text&quot;: &quot;{\r\n  \&quot;audit\&quot;: {\r\n    \&quot;callerId\&quot;: \&quot;string\&quot;\r\n  },\r\n  \&quot;msg\&quot; : \&quot;0R79vwHNf02%2BrbYAN6nRUVYAUYSv39GPzjRhyJi3fUrAdlaQ3QIDoxbDnOutsuV1AKK2IdzB4bOozClWIPdduGh06wgWTx08alRrd2fKgLdE8TiTzV5g4dBStBshRrcNoO6gZChV8YFWsMPkMQ9XbxZ%2ByzOr0vkBb5Tugc2NSa2Ph%2BJ7p%2F2sxNmeSsL0P9dTncezsKrLX4isgLDDvO8XluY8xjs%2BvWkoTvNoKVoywls%3D\&quot;,\r\n  \&quot;tenantCode\&quot; : \&quot;WOMF\&quot;\r\n}&quot;,
+  &quot;contentType&quot;: &quot;application/json&quot;,
+  &quot;charset&quot;: &quot;UTF-8&quot;
+}</httpBodyContent>
+   <httpBodyType>text</httpBodyType>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Content-Type</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>8ee52e0f-aa2d-477a-81b0-b86f95755c88</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Accept</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>e3bedd03-2c82-4da6-9546-e8b1fd9e9e18</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>x-api-key</name>
+      <type>Main</type>
+      <value>ASDFGH@WOMF</value>
+      <webElementGuid>f96db759-7917-4aeb-925c-daf44192b44c</webElementGuid>
+   </httpHeaderProperties>
+   <katalonVersion>9.0.0</katalonVersion>
+   <maxResponseSize>-1</maxResponseSize>
+   <migratedVersion>5.4.1</migratedVersion>
+   <restRequestMethod>GET</restRequestMethod>
+   <restUrl>${sim_url}/services/callback/digi/WOMF/sign?msg=0R79vwHNf02%2BrbYAN6nRUVYAUYSv39GPzjRhyJi3fUrtD%2FEzKauX0TOjZlrKYyCZvd9M%2B9%2BpWXlx8u1kjwWdB1Flupa77%2FnsLNDp1MRMvAZE8TiTzV5g4dBStBshRrcNoO6gZChV8YFWsMPkMQ9XbxZ%2ByzOr0vkBb5Tugc2NSa0geNyPNZS%2BDdNURq8o9zd6xeIEoYxrv%2BKvLJY6%2FPH%2Bgg%3D%3D</restUrl>
+   <serviceType>RESTful</serviceType>
+   <soapBody></soapBody>
+   <soapHeader></soapHeader>
+   <soapRequestMethod></soapRequestMethod>
+   <soapServiceEndpoint></soapServiceEndpoint>
+   <soapServiceFunction></soapServiceFunction>
+   <socketTimeout>-1</socketTimeout>
+   <useServiceInfoFromWsdl>true</useServiceInfoFromWsdl>
+   <variables>
+      <defaultValue>GlobalVariable.sim_url</defaultValue>
+      <description></description>
+      <id>e734a3e8-6478-457f-994e-9069d61908f4</id>
+      <masked>false</masked>
+      <name>sim_url</name>
+   </variables>
+   <wsdlAddress></wsdlAddress>
+</WebServiceRequestEntity>

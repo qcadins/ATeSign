@@ -58,15 +58,12 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
         GlobalVariable.storeVar[0] = resultHashMap.keySet()[o]
     }
     
-	WebUI.comment(resultHashMap.toString())
     'call Test Case untuk login sebagai user berdasarkan doc id'
     WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('email') : GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])], ('excel') : excelPathFESignDocument
             , ('checkBeforeSigning') : checkBeforeSigning, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
 
-	WebUI.comment(GlobalVariable.storeVar.toString())
-		
     'get data kotak masuk send document secara asc, dimana customer no 1'
-    ArrayList result = CustomKeywords.'connection.SendSign.getKotakMasukSendDoc'(conneSign, GlobalVariable.storeVar.keySet()[0], GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])])
+    ArrayList result = CustomKeywords.'connection.SendSign.getKotakMasukSendDoc'(conneSign, refNumber, GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])])
 
     ArrayList documentIdBasedOnLogin = CustomKeywords.'connection.DataVerif.getDocIdBasedOnLoginSigner'(conneSign, refNumber, GlobalVariable.Tenant, GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])])
 
@@ -243,7 +240,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 				arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectPencarianDokumen), result[arrayIndex++], false,
 						FailureHandling.CONTINUE_ON_FAILURE))
 				
-				docunentName = WebUI.getText(modifyObjectPencarianDokumen)
+				documentName = WebUI.getText(modifyObjectPencarianDokumen)
 				} else {
                 'Diverifikasi dengan UI didepan'
                 arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectPencarianDokumen), result[arrayIndex++], false, 
@@ -445,15 +442,14 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
         'get column popup'
         variableColPopup = DriverFactory.webDriver.findElements(By.cssSelector('body > ngb-modal-window > div > div > app-signer > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper:nth-child(1) > datatable-body-row datatable-body-cell'))
-
+		
+		'declare array index menjadi 0 per result'
+		arrayIndexSigner = 0
+		
         'loop untuk row popup'
         for (int i = 1; i <= variableRowPopup.size(); i++) {
             'get data kotak masuk send document secara asc, dimana customer no 1'
-            ArrayList resultSigner = CustomKeywords.'connection.SendSign.getSignerKotakMasukSendDoc'(conneSign, documentIdBasedOnLogin[
-                c], documentName)
-
-            'declare array index menjadi 0 per result'
-            arrayIndexSigner = 0
+            ArrayList resultSigner = CustomKeywords.'connection.SendSign.getSignerKotakMasukSendDoc'(conneSign, refNumber,documentName)
 
             'loop untuk column popup'
             for (int m = 1; m <= variableColPopup.size(); m++) {

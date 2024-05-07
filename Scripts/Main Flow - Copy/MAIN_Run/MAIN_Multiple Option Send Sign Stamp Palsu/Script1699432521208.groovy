@@ -21,13 +21,13 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 currentDate = new Date().format('yyyy-MM-dd')
 
 'looping untuk menjalankan Main'
-for (GlobalVariable.NumofColm = 40; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 150; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
         'stopwatch untuk setiap running case'
         StopWatch watch = StopWatch.createStarted()
-
+		
         'reset value di excel mengenai output previous run. Jika menggunakan opsi Sign Only, maka document id tidak akan didelete'
         resetValue()
 
@@ -87,7 +87,8 @@ for (GlobalVariable.NumofColm = 40; GlobalVariable.NumofColm <= findTestData(exc
 
                     'pemindahan logicvendor ke gv psre'
                     GlobalVariable.Psre = logicVendor
-
+					
+					'jika looping untuk mendapatkan saldo beforenya sudah di akhir, maka update db main flow'
                     if (loopingGetSaldoBefore == (documentTemplateCode.size() - 1)) {
                         'update full to db'
                         CustomKeywords.'connection.UpdateData.updateDBMainFlowBefore'(conneSign, excelPathMain)
@@ -129,9 +130,14 @@ for (GlobalVariable.NumofColm = 40; GlobalVariable.NumofColm <= findTestData(exc
                 logicVendor = CustomKeywords.'connection.SendSign.getVendorNameUsingDocId'(conneSign, findTestData(excelPathMain).getValue(
                         GlobalVariable.NumofColm, rowExcel('documentid')))
 
-                'pemindahan logicvendor ke gv psre'
-                GlobalVariable.Psre = logicVendor
-
+				if (logicVendor == null) {
+					'pemindahan logicvendor ke gv psre'
+					GlobalVariable.Psre = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Vendor'))
+				} else {
+					'pemindahan logicvendor ke gv psre'
+					GlobalVariable.Psre = logicVendor
+				}
+				
                 'update full to db'
                 CustomKeywords.'connection.UpdateData.updateDBMainFlowBefore'(conneSign, excelPathMain)
 
@@ -239,12 +245,13 @@ for (GlobalVariable.NumofColm = 40; GlobalVariable.NumofColm <= findTestData(exc
                 'ambil value cancel doc after send pada inputan'
                 cancelDocsValue = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?'))
             }
-            
-            if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) {
+			
+            if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
+            'Sign Only') {
                 'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
                 WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
                         , ('sheet') : sheet, ('CancelDocsSend') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
-
+            }
                 'jika ada proses cancel doc'
                 if (cancelDocsValue == 'Yes') {
                     stopStopWatch(watch)
@@ -252,7 +259,6 @@ for (GlobalVariable.NumofColm = 40; GlobalVariable.NumofColm <= findTestData(exc
                     'lanjutkan loop'
                     continue
                 }
-                
                 'jika opsi tanda tangannya bukan stamp only'
                 if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
                 'Stamp Only') {
@@ -295,7 +301,7 @@ for (GlobalVariable.NumofColm = 40; GlobalVariable.NumofColm <= findTestData(exc
                     
                     'reset value cancel docs'
                     cancelDocsValue = ''
-
+					
                     'looping berdasarkan email yang akan menandatangani'
                     for (int i = 0; i < emailSigner.keySet().size(); i++) {
                         'jika flagbreaknya menyala, maka akan break'
@@ -336,10 +342,10 @@ for (GlobalVariable.NumofColm = 40; GlobalVariable.NumofColm <= findTestData(exc
                             if ((findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
                             'Sign Only') && (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
                             'Stamp Only')) {
-                                'call test case kotak masuk'
-                                WebUI.callTestCase(findTestCase('Main Flow - Copy/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain
-                                        , ('sheet') : sheet, ('checkBeforeSigning') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
-                            } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
+								'call test case kotak masuk'
+								WebUI.callTestCase(findTestCase('Main Flow - Copy/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain
+								, ('sheet') : sheet, ('checkBeforeSigning') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
+                              } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
                             'Sign Only') {
                                 'call Test Case untuk login sebagai user berdasarkan doc id'
                                 WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('email') : GlobalVariable.storeVar[
@@ -988,7 +994,6 @@ for (GlobalVariable.NumofColm = 40; GlobalVariable.NumofColm <= findTestData(exc
                         }
                     }
                 }
-            }
         }
         
         stopStopWatch(watch)

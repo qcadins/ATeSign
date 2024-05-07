@@ -39,7 +39,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
 
             'HIT API'
-            respon = WS.sendRequest(findTestObject('Postman/Get Tenant Settings', []))
+            respon = WS.sendRequest(findTestObject('Postman/Get Tenant Settings', [('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username')),
+				('tenantCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode'))]))
 
             'Jika status HIT API 200 OK'
             if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {

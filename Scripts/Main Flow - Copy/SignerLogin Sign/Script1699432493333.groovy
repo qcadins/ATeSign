@@ -569,25 +569,23 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
             FailureHandling.CONTINUE_ON_FAILURE)) {
             inputMasukanAndWriteResultSign()
 
-            if (checkErrorLog() == true) {
-                continue
+            if (checkErrorLog() == false) {
+                'Jika masukan ratingnya tidak kosong'
+				if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$Rating')).split(';', 
+                -1)[GlobalVariable.indexUsed]) != '') {
+                	'StoreDB mengenai masukan'
+					masukanStoreDB(conneSign, GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])], arrayMatch)
+				}
             }
             
             'Verifikasi label pop up ketika masukan telah selesai dikirim'
-            if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popupmasukan'), GlobalVariable.TimeOut)) {
+            if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popupmasukan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                 'Klik OK'
                 WebUI.click(findTestObject('/KotakMasuk/Sign/button_OK'))
             } else {
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                         '-', '') + ';') + GlobalVariable.ReasonFailedFeedbackGagal)
-            }
-            
-            'Jika masukan ratingnya tidak kosong'
-            if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$Rating')).split(';', 
-                -1)[GlobalVariable.indexUsed]) != '') {
-                'StoreDB mengenai masukan'
-                masukanStoreDB(conneSign, GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])], arrayMatch)
             }
             
             if (GlobalVariable.FlagFailed == 0 && 
@@ -951,7 +949,9 @@ def checkErrorLog() {
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                     '-', '') + ';') + '<') + errormessage) + '>')
-
+			
+			GlobalVariable.FlagFailed = 1
+			
             return true
         }
     }

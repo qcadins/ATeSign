@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebServiceRequestEntity>
+   <description></description>
+   <name>Document Sign Complete</name>
+   <tag></tag>
+   <elementGuidId>2feb41f3-ed10-4f88-bc94-f62c2602b810</elementGuidId>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <autoUpdateContent>true</autoUpdateContent>
+   <connectionTimeout>-1</connectionTimeout>
+   <followRedirects>false</followRedirects>
+   <httpBody></httpBody>
+   <httpBodyContent>{
+  &quot;text&quot;: &quot;{\r\n    \&quot;status\&quot;: true,\r\n    \&quot;code\&quot;: \&quot;DOCUMENT_SIGN_COMPLETE\&quot;,\r\n    \&quot;timestamp\&quot;: \&quot;2022-06-22T10:53:47+07:00\&quot;,\r\n    \&quot;message\&quot;: null,\r\n    \&quot;data\&quot;: {\r\n        \&quot;document_id\&quot;: \&quot;9722e18a-a705-48b6-9410-5456777f072f\&quot;,\r\n        \&quot;document_file_name\&quot;: \&quot;exampling-document.pdf\&quot;,\r\n        \&quot;document_owner_name\&quot;: \&quot;Angelina\&quot;,\r\n        \&quot;document_owner_email\&quot;: \&quot;angelina@gmail.com\&quot;,\r\n        \&quot;download_url\&quot;: \&quot;https://doc.sandbox-111094.com/download/signed/eyJpdiI6InIwSHkzWEFRdGQ3b3BrWWxiRVVvS2c9PSIsInZhbHVlIjoicnZVOFhySlp3QnV3OTl5b2U1cEY5akNJeDhmb29rTG1xekpUcDA2U0VYY25reUVRVS9kc1dzZ0M4bnlZdmpwMyIsIm1hYyI6IjZlMGMzMTZiM2EyNWI1YWFlZmMzNzI5NTVhN2E1ZjI2YmNhNjU0ZTRlZjBjN2NlYzE3ZWUxNzI3YTU3ZjQzM2QifQ\u003d\u003d?key\u003dyoaygio8b4dgcqz8xpf2fprrjw60dxph\&quot;,\r\n        \&quot;signers\&quot;: [\r\n            {\r\n                \&quot;email\&quot;: \&quot;ANDY@ESIGNHUB.MY.ID\&quot;,\r\n                \&quot;name\&quot;: \&quot;Leonard Gunawan\&quot;\r\n            }\r\n            ,\r\n             {\r\n                \&quot;email\&quot;: \&quot;KRISTY.TIFFANI@ANDYRESEARCH.MY.ID\&quot;,\r\n                \&quot;name\&quot;: \&quot;Leonard Gunawan\&quot;\r\n            }\r\n        ]\r\n    }\r\n}&quot;,
+  &quot;contentType&quot;: &quot;application/json&quot;,
+  &quot;charset&quot;: &quot;UTF-8&quot;
+}</httpBodyContent>
+   <httpBodyType>text</httpBodyType>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Content-Type</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>566b4991-1a51-4dc8-8e09-1eb47ac31176</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Accept</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>3215b87f-d0ea-4be0-87ea-5001dd5aec50</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Token</name>
+      <type>Main</type>
+      <value>EMFXsP2E</value>
+      <webElementGuid>a13e0c3a-00a1-42e8-8645-46c33582b62c</webElementGuid>
+   </httpHeaderProperties>
+   <katalonVersion>9.0.0</katalonVersion>
+   <maxResponseSize>-1</maxResponseSize>
+   <migratedVersion>5.4.1</migratedVersion>
+   <restRequestMethod>POST</restRequestMethod>
+   <restUrl>${base_url}/services/callback/djelas/sign</restUrl>
+   <serviceType>RESTful</serviceType>
+   <soapBody></soapBody>
+   <soapHeader></soapHeader>
+   <soapRequestMethod></soapRequestMethod>
+   <soapServiceEndpoint></soapServiceEndpoint>
+   <soapServiceFunction></soapServiceFunction>
+   <socketTimeout>-1</socketTimeout>
+   <useServiceInfoFromWsdl>true</useServiceInfoFromWsdl>
+   <variables>
+      <defaultValue>GlobalVariable.base_url</defaultValue>
+      <description></description>
+      <id>c31a832d-8649-4ec5-9505-0f14ff9fd427</id>
+      <masked>false</masked>
+      <name>base_url</name>
+   </variables>
+   <wsdlAddress></wsdlAddress>
+</WebServiceRequestEntity>

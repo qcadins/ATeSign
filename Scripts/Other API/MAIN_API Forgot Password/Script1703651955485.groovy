@@ -148,6 +148,29 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     1, GlobalVariable.NumofColm - 1, CustomKeywords.'connection.ForgotPassword.getResetCode'(conneSign, 
                         emailSHA256))
 
+				if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Extra Checking with API Check Reset Code ?')) == 'Yes') {
+				'HIT API'
+				responChecking = WS.sendRequest(findTestObject('Postman/Check Reset Code', [('callerId') : findTestData(excelPath).getValue(
+								GlobalVariable.NumofColm, rowExcel('callerId')), ('loginId') : findTestData(excelPath).getValue(
+								GlobalVariable.NumofColm, rowExcel('loginId')), ('otpCode') :  findTestData(excelPath).getValue(
+								GlobalVariable.NumofColm, rowExcel('OTP latest'))]))
+				
+				'Jika status HIT API 200 OK'
+				if (WS.verifyResponseStatusCode(responChecking, 200, FailureHandling.OPTIONAL) == true) {
+					'get Status Code'
+					statusCodeChecking = WS.getElementPropertyValue(responChecking, 'status.code')
+					
+					if (statusCodeChecking != '0') {
+						'Write To Excel GlobalVariable.StatusFailed and errormessage'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
+									'Reason Failed')) + ';') + 'Checking pada OTP terbaru salah menggunakan OTP Check Reset Code')
+						
+						GlobalVariable.FlagFailed = 1
+					}
+				}
+				}
+				
                 'cek apakah send ulang OTP berhasil'
                 if (WebUI.verifyNotMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('OTP before')), 
                     findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('OTP latest')), false, FailureHandling.OPTIONAL)) {

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebServiceRequestEntity>
+   <description></description>
+   <name>Update Template Document Tanpa Doc</name>
+   <tag></tag>
+   <elementGuidId>16d92e0c-4f4d-4586-8773-5ea4b8198761</elementGuidId>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <autoUpdateContent>true</autoUpdateContent>
+   <connectionTimeout>-1</connectionTimeout>
+   <followRedirects>false</followRedirects>
+   <httpBody></httpBody>
+   <httpBodyContent>{
+  &quot;text&quot;: &quot;{\r\n    \&quot;documentTemplateCode\&quot;: \&quot;DOC-PPNFEWS-CUSTOM\&quot;,\r\n    \&quot;documentTemplateName\&quot;: \&quot;PERJANJIAN PEMBIAYAAN CUSTOM\&quot;,\r\n    \&quot;documentTemplateDescription\&quot;: \&quot;PERJANJIAN PEMBIAYAAN CUSTOMM\&quot;,\r\n    \&quot;paymentSignTypeCode\&quot;: \&quot;TTD\&quot;,\r\n    \&quot;documentExample\&quot;: \&quot;\&quot;,\r\n    \&quot;isActive\&quot;: \&quot;1\&quot;,\r\n    \&quot;isSequence\&quot;: \&quot;1\&quot;,\r\n    \&quot;isSignLocOnly\&quot;: \&quot;0\&quot;,\r\n    \&quot;vendorCode\&quot; : \&quot;\&quot;,\r\n    \&quot;audit\&quot;: {\r\n        \&quot;callerId\&quot;: \&quot;ADMIN@WOM.CO.ID\&quot;\r\n    },\r\n    \&quot;tenantCode\&quot;: \&quot;WOMF\&quot;\r\n}&quot;,
+  &quot;contentType&quot;: &quot;application/json&quot;,
+  &quot;charset&quot;: &quot;UTF-8&quot;
+}</httpBodyContent>
+   <httpBodyType>text</httpBodyType>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Content-Type</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>e1ba349d-f1ab-4109-988b-cd442e945995</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Accept</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>7ea473e0-ad8f-444e-b30f-9985799bd44f</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Authorization</name>
+      <type>Main</type>
+      <value>Bearer ${token}</value>
+      <webElementGuid>e7e6e20e-73ea-45d9-b80a-c989b266df2b</webElementGuid>
+   </httpHeaderProperties>
+   <katalonVersion>9.0.0</katalonVersion>
+   <maxResponseSize>-1</maxResponseSize>
+   <migratedVersion>5.4.1</migratedVersion>
+   <restRequestMethod>POST</restRequestMethod>
+   <restUrl>${base_url}/services/document/s/updateDocumentTemplate</restUrl>
+   <serviceType>RESTful</serviceType>
+   <soapBody></soapBody>
+   <soapHeader></soapHeader>
+   <soapRequestMethod></soapRequestMethod>
+   <soapServiceEndpoint></soapServiceEndpoint>
+   <soapServiceFunction></soapServiceFunction>
+   <socketTimeout>-1</socketTimeout>
+   <useServiceInfoFromWsdl>true</useServiceInfoFromWsdl>
+   <variables>
+      <defaultValue>GlobalVariable.base_url</defaultValue>
+      <description></description>
+      <id>e0c8bd30-2ef7-46dc-9992-896f5ad47aa3</id>
+      <masked>false</masked>
+      <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>c4e1d5d7-ec87-4fd2-b939-f59924f7ad81</id>
+      <masked>false</masked>
+      <name>token</name>
+   </variables>
+   <wsdlAddress></wsdlAddress>
+</WebServiceRequestEntity>

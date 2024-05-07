@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Get List Balance Tenant</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>566cccfc-2dc4-4d9f-9a8d-96c6c7fdaa34</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>9c85f000-ce68-45d5-bd7a-5091d1c6d3c3</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>082118ce-4b6a-4c0d-8ed5-6fb6649a8ba4</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Get List Balance Tenant'</defaultValue>
+      <description></description>
+      <id>9c85f000-ce68-45d5-bd7a-5091d1c6d3c3</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Get List Balance Tenant'</defaultValue>
+      <description></description>
+      <id>082118ce-4b6a-4c0d-8ed5-6fb6649a8ba4</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

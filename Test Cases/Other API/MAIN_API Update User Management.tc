@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Update User Management</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>17587acc-1abb-4c2d-ba71-fba3c730ea60</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>38bed68f-efdc-4f94-8809-da620fb6160e</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>3080433d-4360-4f7b-8dc7-c2af2a719c5f</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Update User Management'</defaultValue>
+      <description></description>
+      <id>38bed68f-efdc-4f94-8809-da620fb6160e</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Update User Management'</defaultValue>
+      <description></description>
+      <id>3080433d-4360-4f7b-8dc7-c2af2a719c5f</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

@@ -21,16 +21,10 @@ GlobalVariable.NumofColm = 4
 
 excelPathFESignDocument = 'Main/Main'
 
-if (excelPathFESignDocument.contains('MAIN')) {
-	println 'bb'
-} else {
-	println 'aa'
-}
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-
-totalMeterai = CustomKeywords.'connection.DataVerif.getSentOtpByEmail'(conneSign, 'WOMF')
-println (totalMeterai)
+signCount = CustomKeywords.'connection.APIFullService.getTotalSigner'(conneSign, '00155D0B-7502-A62E-11EF-0C2A0FC2F751', 'USERCJAH@GMAIL.COM')
+println signCount + 2
 
  //*[@id="searchForm"]/div[1]/div[10]/app-question/app-select/div/div[2]/ng-dropdown-panel
 //
