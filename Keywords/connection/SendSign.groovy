@@ -605,6 +605,24 @@ class SendSign {
 		}
 		listdata
 	}
+	
+	@Keyword
+	getOTPFromUser(Connection conn, String loginId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select otp_code from am_msuser where login_id = '" + loginId + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 
 	@Keyword
 	signCallBack(Connection conn, String tenantCode, String documentId, String loginId, String code) {
