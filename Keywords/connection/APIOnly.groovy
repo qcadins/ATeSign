@@ -158,7 +158,7 @@ class APIOnly {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getIdMsUser(Connection conn, String NIK) {
 		stm = conn.createStatement()
@@ -172,5 +172,24 @@ class APIOnly {
 			data = resultSet.getObject(1)
 		}
 		data
+	}
+	
+	@Keyword
+	getAllVendor(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select vendor_code, vendor_name from ms_vendor")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+
+				listdata.add(data)
+			}
+		}
+		listdata
 	}
 }

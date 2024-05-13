@@ -21,7 +21,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 currentDate = new Date().format('yyyy-MM-dd')
 
 'looping untuk menjalankan Main'
-for (GlobalVariable.NumofColm = 150; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 140; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
@@ -184,9 +184,6 @@ for (GlobalVariable.NumofColm = 150; GlobalVariable.NumofColm <= findTestData(ex
                 resultSaldoBefore.putAll(GlobalVariable.saldo)
 				
 				GlobalVariable.Psre = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Vendor'))
-				
-				'update full to db'
-				CustomKeywords.'connection.UpdateData.updateDBMainFlowBefore'(conneSign, excelPathMain)
             } else {
                 GlobalVariable.Psre = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Vendor'))
 
@@ -511,8 +508,17 @@ for (GlobalVariable.NumofColm = 150; GlobalVariable.NumofColm <= findTestData(ex
                     'jika ada proses cancel doc'
                     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Stamp?')) == 
                     'Yes') {
-                        'lanjutkan loop'
-                        continue
+						'flag cancel'
+						cancelDocsValue = 'Yes'
+						
+						'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
+						WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
+							, ('sheet') : sheet, ('CancelDocsSign') : cancelDocsValue, ('vendor') : vendor],
+						FailureHandling.CONTINUE_ON_FAILURE)
+						
+						flagBreak = 1
+
+						break
                     }
                 }
                 
@@ -1197,4 +1203,3 @@ def inputDDLExact(String locationObject, String input) {
         WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
     }
 }
-

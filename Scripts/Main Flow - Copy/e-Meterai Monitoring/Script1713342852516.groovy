@@ -13,6 +13,9 @@ currentDate = LocalDate.now()
 
 firstDateOfMonth = currentDate.withDayOfMonth(1)
 
+'Call test Case untuk login sebagai admin wom admin client'
+WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('excel') : excel, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
@@ -398,4 +401,3 @@ def inputDDLExact(String locationObject, String input) {
         WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
     }
 }
-

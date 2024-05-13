@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>inputTenant</name>
+   <tag></tag>
+   <elementGuidId>755e9572-f3e3-4acd-8982-333618a560fe</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;tenantCode&quot;]/div/div/div[2]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;tenantCode&quot;]/div/div/div[2]/input</value>
+      <webElementGuid>b35596f0-7480-4816-bc38-a10e8c11324b</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

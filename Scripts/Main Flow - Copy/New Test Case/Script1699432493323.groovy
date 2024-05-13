@@ -23,38 +23,13 @@ excelPathFESignDocument = 'Main/Main'
 
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-signCount = CustomKeywords.'connection.APIFullService.getTotalSigner'(conneSign, '00155D0B-7502-A62E-11EF-0C2A0FC2F751', 'USERCJAH@GMAIL.COM')
-println signCount + 2
 
- //*[@id="searchForm"]/div[1]/div[10]/app-question/app-select/div/div[2]/ng-dropdown-panel
-//
-//aa = WebUI.getAttribute(findTestObject('View User OTP/text_otp'), 'value')
-//println aa
-//
-//WebUI.delay(19000000)
-//@Grab(group='com.twilio.sdk', module='twilio', version='7.55.0')
-//
-//accountSid = 'AC67480a3610517f15d6f3179268d80111'
-//authToken = '1a5e0ca394243f7454befb7fc84e5343'
-//
-//// Initialize Twilio client
-//Twilio.init(accountSid, authToken)
-//
-//
-//// Retrieve messages using Twilio API
-//ResourceSet<Message> messages = Message.reader('').limit(20).read()
-//
-//println messages
-//// Print the body of each message
-//messages.each { message ->
-//    println(message.getBody())
-//}
-//otp = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
-//println otp
-//otp1 = CustomKeywords.'customizekeyword.GetSMS.getOTP'('PrivyID')
-//println otp1
-//otp2 = CustomKeywords.'customizekeyword.GetSMS.getOTP'('DIGISIGN')
-//println otp2
+otp = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
+println otp
+otp1 = CustomKeywords.'customizekeyword.GetSMS.getOTP'('PrivyID')
+println otp1
+otp2 = CustomKeywords.'customizekeyword.GetSMS.getOTP'('DIGISIGN')
+println otp2
 
 def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)

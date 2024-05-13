@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_Reconcile</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>4d9ddbd0-e393-47d0-b568-059935f5333e</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>276d19a4-5efd-4da7-bf12-f90762202122</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>be6b42fc-54e5-49bd-a7ff-1ac1b596f91c</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Reconcile/Reconcile'</defaultValue>
+      <description></description>
+      <id>276d19a4-5efd-4da7-bf12-f90762202122</id>
+      <masked>false</masked>
+      <name>excelPathReconcile</name>
+   </variable>
+   <variable>
+      <defaultValue>'Reconcile'</defaultValue>
+      <description></description>
+      <id>be6b42fc-54e5-49bd-a7ff-1ac1b596f91c</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

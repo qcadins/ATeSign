@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Message Delivery Report' or . = 'Message Delivery Report')]</value>
+         <value>//*[@href = '/message-delivery-report']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>Message Delivery Report</value>
-      <webElementGuid>c1a831ef-74fd-4ad0-a565-13f32124b3f1</webElementGuid>
+      <webElementGuid>e110b05e-6d90-48de-95b4-76fcecc1a079</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>href</name>
+      <type>Main</type>
+      <value>/message-delivery-report</value>
+      <webElementGuid>ccdcbd3b-f4e1-4b95-9a19-9e68894115d3</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
