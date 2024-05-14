@@ -1231,8 +1231,10 @@ def verifyListEmbed(Connection conneSign, ArrayList nomorKontrakPerPilihan, Arra
 					   'Verifikasi UI dengan db'
 					   arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
 				   }
-			   } else if (i == 10) {
-				   /*modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+			   } else if (i == 11) {
+					continue
+				} else if (i == 10) {
+				   modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
 				   'equals', ((('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 				   j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div/em', true)
 
@@ -1247,7 +1249,7 @@ def verifyListEmbed(Connection conneSign, ArrayList nomorKontrakPerPilihan, Arra
 						   arrayMatch.add(false)
 					   }
 				   }
-				   */
+				   
 				   arrayIndex++
 				   
 				   continue
