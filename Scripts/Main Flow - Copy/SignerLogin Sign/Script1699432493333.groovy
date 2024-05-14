@@ -1930,7 +1930,8 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
         } else {
             penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
         }
-    } else if (GlobalVariable.chooseOTP.toString().contains('Email')) {
+    } 
+	if (GlobalVariable.chooseOTP.toString().contains('Email')) {
 		tipeSaldo = 'OTP'
 
 		'menggunakan saldo sms'

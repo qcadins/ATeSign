@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@for = 'wa']</value>
+         <value>//*[@for = 'email']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>for</name>
       <type>Main</type>
-      <value>wa</value>
-      <webElementGuid>b24bed0a-9005-46dc-b3d8-989a27495ba6</webElementGuid>
+      <value>email</value>
+      <webElementGuid>fcd0b1fc-57fd-4dae-834a-39b724976c68</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -1235,6 +1235,8 @@ def verifOTPMethod(Connection conneSign, String emailSigner, ArrayList listOTP, 
 
                 if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_wa'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
                     GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'WA')
+                } else if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_email'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+                    GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'Email')
                 }
             }
         } else if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Media Pemilihan OTP')).split(
@@ -1252,7 +1254,28 @@ def verifOTPMethod(Connection conneSign, String emailSigner, ArrayList listOTP, 
 
                 if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_sms'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
                     GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'SMS')
+                } else if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_email'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+                    GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'Email')
                 }
+            }
+        } else if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Media Pemilihan OTP')).split(
+            ';', -1)[GlobalVariable.indexUsed]) == 'Email') {
+            if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_email'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+                'click email'
+                WebUI.click(findTestObject('KotakMasuk/Sign/button_email'))
+
+                GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'Email')
+            } else {
+                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning, 
+                    (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
+                    ';') + 'button Email untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
+
+                if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_sms'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+                    GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'SMS')
+                }else if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_wa'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+					GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'WA')
+				}
             }
         }
     }
@@ -1499,7 +1522,67 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
                     ';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
                     'klik tombol lanjut dengan OTP'
                     WebUI.click(findTestObject('Object Repository/KotakMasuk/Sign/btn_LanjutdenganOTP'))
-
+					
+					'jika medianya sms'
+					if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Media Pemilihan OTP')).split(
+						';', -1)[GlobalVariable.indexUsed]) == 'SMS') {
+						if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_sms'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+							'click sms'
+							WebUI.click(findTestObject('KotakMasuk/Sign/button_sms'))
+			
+							GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'SMS')
+						} else {
+							'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
+								(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
+								';') + 'button SMS untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
+			
+							if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_wa'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+								GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'WA')
+							} else if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_email'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+								GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'Email')
+							}
+						}
+					} else if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Media Pemilihan OTP')).split(
+						';', -1)[GlobalVariable.indexUsed]) == 'WA') {
+						if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_wa'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+							'click wa'
+							WebUI.click(findTestObject('KotakMasuk/Sign/button_wa'))
+			
+							GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'WA')
+						} else {
+							'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
+								(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
+								';') + 'button WA untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
+			
+							if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_sms'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+								GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'SMS')
+							} else if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_email'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+								GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'Email')
+							}
+						}
+					} else if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Media Pemilihan OTP')).split(
+						';', -1)[GlobalVariable.indexUsed]) == 'Email') {
+						if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_email'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+							'click email'
+							WebUI.click(findTestObject('KotakMasuk/Sign/button_email'))
+			
+							GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'Email')
+						} else {
+							'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
+								(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
+								';') + 'button Email untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
+			
+							if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_sms'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+								GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'SMS')
+							} else if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_wa'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+								GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'WA')
+							}
+						}
+					}
+					
                     'panggil fungsi verifOTP'
                     if (verifOTPMethodDetail(conneSign, emailSigner, listOTP, noTelpSigner, otpAfter, vendor) == false) {
                         return false
@@ -1790,6 +1873,31 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
             penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
         }
     }
+	
+	if (GlobalVariable.chooseOTP.toString().contains('Email')) {
+		tipeSaldo = 'OTP'
+
+		'menggunakan saldo wa'
+		balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+
+		if (balmut.size() == 0) {
+			if (GlobalVariable.Psre.toString().equalsIgnoreCase('Privy')) {
+				'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+						'-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via Email')
+
+				GlobalVariable.FlagFailed = 1
+			} else if (GlobalVariable.Psre.toString().equalsIgnoreCase('Vida')) {
+				'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
+					(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+						'-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via Email')
+			}
+		} else {
+			penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
+		}
+	}
     
     if ((notifTypeDB == '0') || (notifTypeDB == 'Level Tenant')) {
         if (mustUseWAFirst == '1') {
@@ -1923,7 +2031,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 
             (GlobalVariable.eSignData['VerifikasiOTP']) = ((GlobalVariable.eSignData['VerifikasiOTP']) - (GlobalVariable.eSignData[
             'CountVerifikasiWA']))
-        } else if (tipeSaldo == 'SMS Notif') {
+        } else if (tipeSaldo == 'OTP') {
             (GlobalVariable.eSignData['CountVerifikasiSMS']) = ((GlobalVariable.eSignData['CountVerifikasiSMS']) + pemotonganSaldo)
 
             (GlobalVariable.eSignData['VerifikasiOTP']) = ((GlobalVariable.eSignData['VerifikasiOTP']) - (GlobalVariable.eSignData[
@@ -1994,6 +2102,19 @@ def pilihWAorSMS(int rowInput, int indexLooping, int splitIndex) {
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning, 
                     (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
                     ';') + 'button WA untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
+            }
+        } else if ((mediaPemilihan[indexLooping]) == 'Email') {
+            'jika element pada sms present'
+            if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/button_email'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+                'click email'
+                WebUI.click(findTestObject('KotakMasuk/Sign/button_email'))
+
+                GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'Email')
+            } else {
+                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                CustomKeywords.'excelPathFESignDocument.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                    GlobalVariable.StatusWarning, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('Reason Failed')) + ';') + 'button Email untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
             }
         }
     }
