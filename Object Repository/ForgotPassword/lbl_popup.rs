@@ -17,10 +17,10 @@
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
+      <matchCondition>contains</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;swal2-content&quot;]</value>
-      <webElementGuid>54bebb40-4344-4666-9af9-99cc0e552923</webElementGuid>
+      <webElementGuid>75820c3b-3e69-4877-b46e-956a2d0d6495</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

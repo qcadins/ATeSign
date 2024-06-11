@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'row my-8 px-4']</value>
+         <value>//*[@class = 'mt-5 px-4']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>row my-8 px-4</value>
-      <webElementGuid>e0c27991-a00e-42aa-ac50-9fed035440da</webElementGuid>
+      <value>mt-5 px-4</value>
+      <webElementGuid>f0cbbbe5-ddba-4d5d-97a3-5fe1395634c6</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

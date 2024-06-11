@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>MAIN_Register</name>
+   <name>MAIN_Register - Benn</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>78c89d4d-419b-42a2-9e45-8369a5f0aef1</testCaseGuid>
+   <testCaseGuid>5774a561-881c-4046-8e9b-1a101612aeb0</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>8b496a5f-f2c3-41f7-8b19-002af48df479</variableId>
+      <variableId>d877695f-9d19-4e99-b195-cde2390bb6b0</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>2b83ce14-0b18-424b-87af-6e007cb224ea</variableId>
+      <variableId>9246aecf-11b0-4a3c-8254-5181062adfc2</variableId>
    </variableLinks>
    <variable>
       <defaultValue>'Registrasi/MainRegister'</defaultValue>
       <description></description>
-      <id>8b496a5f-f2c3-41f7-8b19-002af48df479</id>
+      <id>d877695f-9d19-4e99-b195-cde2390bb6b0</id>
       <masked>false</masked>
       <name>excelPathRegister</name>
    </variable>
    <variable>
       <defaultValue>'Main Register'</defaultValue>
       <description></description>
-      <id>2b83ce14-0b18-424b-87af-6e007cb224ea</id>
+      <id>9246aecf-11b0-4a3c-8254-5181062adfc2</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>

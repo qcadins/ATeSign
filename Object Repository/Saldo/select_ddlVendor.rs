@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>select_ddlVendor</name>
+   <tag></tag>
+   <elementGuidId>1f5217b8-0476-4913-aa0e-d4565b6f9855</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+         <value>select.vendor-select.font-large-1.ng-untouched.ng-pristine.ng-valid</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//select</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>select</value>
+      <webElementGuid>d2b0b0c1-701b-4521-9019-63494378866b</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>formcontrolname</name>
+      <type>Main</type>
+      <value>vendorSelect</value>
+      <webElementGuid>62965fa1-82d4-4291-9713-494c9c41587c</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>placeholder</name>
+      <type>Main</type>
+      <value>Select Vendor</value>
+      <webElementGuid>6ecf5b66-8bc5-440c-a8c8-05ba71d4bd07</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>vendor-select font-large-1 ng-untouched ng-pristine ng-valid</value>
+      <webElementGuid>368b7f03-dd74-4c1b-b32d-32cc57416435</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>ng-reflect-name</name>
+      <type>Main</type>
+      <value>vendorSelect</value>
+      <webElementGuid>be8cb965-1905-4433-acde-52d03f06f82b</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value> ESIGN/ADINS  PRIVY  TEKENAJA  VIDA  DIGISIGN </value>
+      <webElementGuid>46636789-21ae-4baf-b51d-687c2c0b0b6f</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html[1]/body[@class=&quot;vertical-layout menu-expanded menu-open vertical-menu navbar-static pace-done&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;main-panel&quot;]/div[@class=&quot;main-content&quot;]/div[@class=&quot;content-wrapper&quot;]/app-balance[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;row match-height&quot;]/div[@class=&quot;col-12&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-xl-6 col-lg-6 col-md-6 col-12&quot;]/div[@class=&quot;card&quot;]/form[@class=&quot;ng-untouched ng-pristine ng-valid&quot;]/select[@class=&quot;vendor-select font-large-1 ng-untouched ng-pristine ng-valid&quot;]</value>
+      <webElementGuid>a053a6df-fd99-48b6-87bc-c39b150335ea</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//select</value>
+      <webElementGuid>c6262405-0858-4c19-8c6d-e3ba27cbd565</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//select[@placeholder = 'Select Vendor' and (text() = ' ESIGN/ADINS  PRIVY  TEKENAJA  VIDA  DIGISIGN ' or . = ' ESIGN/ADINS  PRIVY  TEKENAJA  VIDA  DIGISIGN ')]</value>
+      <webElementGuid>5a5d8648-9176-487a-8f4d-8ea886bbb666</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

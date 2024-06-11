@@ -6,6 +6,10 @@
    <elementGuidId>156325cb-504d-493e-84c5-f9c926c97a01</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>BASIC</key>
+         <value>//*[@type = 'text' and @placeholder = 'Tulis email / nomor handphone Anda']</value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>input.form-control.ng-untouched.ng-pristine.ng-invalid</value>
       </entry>
@@ -14,7 +18,7 @@
          <value>//input[@type='text']</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>d0f3d6fc-a9b7-4017-9ee9-471fe58e7cf5</webElementGuid>
+      <webElementGuid>cdea595c-469f-4136-8ac4-aa41080b971a</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -30,7 +34,7 @@
       <name>type</name>
       <type>Main</type>
       <value>text</value>
-      <webElementGuid>3cd4b2d4-8d68-4ea3-b2d3-6b0411d293b7</webElementGuid>
+      <webElementGuid>b69f089c-3e4f-4be9-9ca9-0dd91740cd2f</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -38,7 +42,7 @@
       <name>formcontrolname</name>
       <type>Main</type>
       <value>username</value>
-      <webElementGuid>c53c6706-b8c0-4538-b5f7-a92a7fe6e425</webElementGuid>
+      <webElementGuid>44ca1af0-7b75-4927-97fd-2310d0fee5e3</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -46,7 +50,7 @@
       <name>size</name>
       <type>Main</type>
       <value>36</value>
-      <webElementGuid>92846c48-745b-4009-8c43-525645bd7991</webElementGuid>
+      <webElementGuid>b9e76e59-5836-4477-9f6d-b28f36292f18</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -54,7 +58,7 @@
       <name>class</name>
       <type>Main</type>
       <value>form-control ng-untouched ng-pristine ng-invalid</value>
-      <webElementGuid>b5fb3dab-b040-472a-9673-ef909905b6a5</webElementGuid>
+      <webElementGuid>12aa7de9-b654-4dce-9f25-e1e87ba379b8</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -62,7 +66,7 @@
       <name>ng-reflect-name</name>
       <type>Main</type>
       <value>username</value>
-      <webElementGuid>082d3bce-8949-49a8-8147-136960ae56c9</webElementGuid>
+      <webElementGuid>1905cbcb-b8eb-4f69-af0f-ebbbd259c739</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -70,7 +74,7 @@
       <name>placeholder</name>
       <type>Main</type>
       <value>Tulis email / nomor handphone Anda</value>
-      <webElementGuid>9d21d992-e5ec-4001-9f94-22ead5ff431f</webElementGuid>
+      <webElementGuid>2513755c-bebb-4071-9bb9-f64e58ca7924</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>ng-reflect-is-disabled</name>
       <type>Main</type>
       <value>false</value>
-      <webElementGuid>8560fa4a-df33-49e0-b0b8-7971f409dda8</webElementGuid>
+      <webElementGuid>4386e4e3-4dfa-478c-8587-f483b3e8646d</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>ng-reflect-ng-class</name>
       <type>Main</type>
       <value>[object Object]</value>
-      <webElementGuid>b14150f3-f4a6-438d-9dc9-502b12443c48</webElementGuid>
+      <webElementGuid>33de3930-30a7-4dc1-abf0-d34e5d84eaf0</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>id(&quot;login&quot;)/div[@class=&quot;row vh-100&quot;]/div[@class=&quot;col right-content&quot;]/div[@class=&quot;content-container&quot;]/form[@class=&quot;ng-untouched ng-pristine ng-invalid&quot;]/div[@class=&quot;form-group&quot;]/div[@class=&quot;input&quot;]/input[@class=&quot;form-control ng-untouched ng-pristine ng-invalid&quot;]</value>
-      <webElementGuid>d507f1fe-347c-489e-8ece-0cf24b8f5e4b</webElementGuid>
+      <webElementGuid>ec902714-ec9f-4ce0-9b1b-5724695967f2</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -102,7 +106,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//input[@type='text']</value>
-      <webElementGuid>e2357ce1-af6e-4a4c-9b89-f436769fdabc</webElementGuid>
+      <webElementGuid>c10d9065-91b0-4aa6-aa61-0804f3d1f118</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -110,7 +114,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//section[@id='login']/div/div[2]/div/form/div/div/input</value>
-      <webElementGuid>46ca0ea0-1eb6-484f-b2b6-85454795f9a1</webElementGuid>
+      <webElementGuid>213ba4c8-cdd2-474c-9ea3-3abbb10963cc</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -118,7 +122,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//input</value>
-      <webElementGuid>6804a117-4812-42ed-9015-29575d9cb03e</webElementGuid>
+      <webElementGuid>3abb972f-39a5-4baf-801e-ad832f8de01f</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -126,6 +130,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'text' and @placeholder = 'Tulis email / nomor handphone Anda']</value>
-      <webElementGuid>2e3e3524-d916-4df6-88ec-c1f5d025e655</webElementGuid>
+      <webElementGuid>d547db3b-57aa-421d-9982-ffa39cf5945b</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>
