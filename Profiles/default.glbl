@@ -241,7 +241,7 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>2</initValue>
+      <initValue>3</initValue>
       <name>TimeOut</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>

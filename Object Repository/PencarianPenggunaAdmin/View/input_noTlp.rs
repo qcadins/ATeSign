@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_ResetOTP</name>
+   <name>input_noTlp</name>
    <tag></tag>
-   <elementGuidId>340c26a1-229b-40fe-a1af-763cb6500261</elementGuidId>
+   <elementGuidId>055ae62e-0fec-4298-84fa-0c0973dfa808</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'datatable-scroll ng-star-inserted']/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[7]/div/a[2]/em</value>
+         <value>//*[@id=&quot;noHp&quot;]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@class = 'datatable-scroll ng-star-inserted']/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[7]/div/a[2]/em</value>
-      <webElementGuid>592f0c39-60ad-483b-92e4-bab175ba9ed1</webElementGuid>
+      <value>//*[@id=&quot;noHp&quot;]</value>
+      <webElementGuid>6f77eb51-cb0e-4816-a6fe-92cf1fdeefdc</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

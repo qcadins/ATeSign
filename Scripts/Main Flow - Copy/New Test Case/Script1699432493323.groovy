@@ -21,6 +21,19 @@ GlobalVariable.NumofColm = 4
 
 excelPathFESignDocument = 'Main/Main'
 
+// Ensure GlobalVariable.eSignData['allTrxNo'] has been defined and contains the value you want to manipulate
+GlobalVariable.eSignData['allTrxNo'] = "844111;"
+
+signtypes = (GlobalVariable.eSignData['allTrxNo']).toString().split(';', -1)
+println signtypes
+
+signtypes = signtypes.findAll { it.trim() }
+
+println signtypes
+println signtypes[0]
+
+WebUI.delay(1000000)
+
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 

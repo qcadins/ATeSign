@@ -107,7 +107,7 @@ for (looping = 0; looping < loopcase; looping++) {
         WebUI.click(modifyObjectbuttonTambahPenandaTangan)
 
         'diberikan delay 3 detik dengan loading'
-        WebUI.delay(1)
+        WebUI.delay(3)
 
         if (checkErrorLog() == true) {
             continue
@@ -127,7 +127,7 @@ for (looping = 0; looping < loopcase; looping++) {
         WebUI.click(findTestObject('ManualSign/button_x'))
 
         'diberikan delay 3 detik dengan loading'
-        WebUI.delay(1)
+        WebUI.delay(3)
 
         'looping berdasarkan email penanda tangan'
         for (int i = 0; i < emailPenandaTangan.size(); i++) {
@@ -168,13 +168,13 @@ for (looping = 0; looping < loopcase; looping++) {
                             rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + error) + '>')
 
                     'diberikan delay 2 detik agar sudah ter write sebelum button cancel'
-                    WebUI.delay(1)
+                    WebUI.delay(2)
 
                     'klik button cancel'
                     WebUI.click(findTestObject('ManualSign/button_Cancel'))
 
                     'delay 2 detik agar cancelnya benar-benar diclick'
-                    WebUI.delay(1)
+                    WebUI.delay(2)
 
                     continue
                 }
@@ -193,7 +193,7 @@ for (looping = 0; looping < loopcase; looping++) {
             }
             
             'diberikan delay 3 detik untuk'
-            WebUI.delay(1)
+            WebUI.delay(3)
 
             'check save ada attribute disabled'
             if (WebUI.verifyElementHasAttribute(findTestObject('ManualSign/button_Save'), 'disabled', GlobalVariable.TimeOut, 
@@ -295,10 +295,13 @@ for (looping = 0; looping < loopcase; looping++) {
             WebUI.click(findTestObject('Object Repository/ManualSign/btn_ttd'))
 
             'diberikan delay 5 detik untuk loading'
-            WebUI.delay(1)
+            WebUI.delay(3)
 
+			'focus set tanda tangan'
+			WebUI.focus(findTestObject('ManualSign/btn_setTandaTangan'))
+			
             'Klik set tanda tangan'
-            WebUI.enhancedClick(findTestObject('ManualSign/btn_setTandaTangan'))
+            WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
 
             'click button lock signbox'
             WebUI.click(findTestObject('ManualSign/btn_LockSignBox'))
@@ -330,7 +333,7 @@ for (looping = 0; looping < loopcase; looping++) {
                     WebUI.click(findTestObject('Object Repository/ManualSign/btn_meterai'))
                 }
                 
-                WebUI.delay(1)
+                WebUI.delay(2)
 
                 'modify label tipe tanda tangan di kotak'
                 modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/ManualSign/modifyObject'), 
@@ -516,17 +519,22 @@ for (looping = 0; looping < loopcase; looping++) {
 					}
                     
                     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')) != 
-                    '') {
+                    '')	{
                         'verify business line code'
                         arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
                                     rowExcel('businessLineName')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
-                    } else {
+                    } 
+                     else {
 						index++
 					}
                     
                     'verify use sign qr'
                     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
                                 rowExcel('QR')).replace('Ya', '1').replace('Tidak', '0'), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+					
+					'PERUBAHAN 4.6 verify use request document'
+					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+								rowExcel('Username')).toUpperCase(), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 					
                     if ((GlobalVariable.Psre == 'PRIVY') && tipeTandaTangan.contains('Meterai')) {
                         'pastikan privy sign loc tidak null'
@@ -665,7 +673,7 @@ def inputForm(Connection conneSign) {
     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('officeName')) != '') {
 		'get data store db'
 		result = CustomKeywords.'connection.APIFullService.getOfficeNameBasedOnRegionAndTenant'(conneSign, GlobalVariable.Tenant, findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('regionName')))
-	
+	    
 		'check ddl busienss line code count'
 		checkDDLWithGetDDL(findTestObject('ManualSign/button_ddlOfficeCode'), result, ' pada tipe Office ', findTestObject('ManualSign/btn_closeddlOffice'))
 		
@@ -749,7 +757,7 @@ def sortingSequenceSign() {
                     WebUI.dragAndDropToObject(modifyObject, modifyObjectNew)
 
                     'untuk proses pemindahan'
-                    WebUI.delay(1)
+                    WebUI.delay(2)
 
                     seq--
                 }
@@ -760,24 +768,26 @@ def sortingSequenceSign() {
         WebUI.click(findTestObject('Object Repository/ManualSign/btn_simpan'))
 
         'delay untuk loading simpan'
-        WebUI.delay(1)
+        WebUI.delay(2)
     }
 }
 
-def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
-    'inisialisasi penggunaan saldo, balmut, tipe saldo'
-    int penggunaanSaldo = 0
-	
-	int pemotonganSaldo = 0
-
-	int increment
-
-    ArrayList<String> balmut = []
-
-    String tipeSaldo
-
+def checkSaldoWAOrSMS(Connection conneSign, String emailSignerFull) {
     'looping per email signer'
-    for (loopingEmailPerDoc = 0; loopingEmailPerDoc < emailSigner.split(';', -1).size(); loopingEmailPerDoc++) {
+    for (loopingEmailPerDoc = 0; loopingEmailPerDoc < emailSignerFull.split(';', -1).size(); loopingEmailPerDoc++) {
+		'inisialisasi penggunaan saldo, balmut, tipe saldo'
+		int penggunaanSaldo = 0
+		
+		int pemotonganSaldo = 0
+	
+		int increment = 0
+	
+		ArrayList<String> balmut = []
+	
+		String tipeSaldo = ''
+		
+		emailSigner = emailSignerFull.split(';', -1)
+		
         fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailSigner[loopingEmailPerDoc])
 
         notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, emailSigner[loopingEmailPerDoc], 
@@ -788,14 +798,17 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 		}
 		
         if (notifTypeDB == '0' || notifTypeDB == 'Level Tenant') {
-            mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
+			//perubahan change 4.6
+			mustUseSMSFirst = CustomKeywords.'connection.DataVerif.getMustUseSMSFirst'(conneSign, GlobalVariable.Tenant)
+			
+			mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
 
-            'get setting email service, full name, must use wa first'
-            emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, emailSigner[
-                loopingEmailPerDoc])
-
-            'jika must use wa first'
-            if (mustUseWAFirst == '1') {
+			'get email service, full name, dan setting must use wa first'
+			emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, emailSigner[
+				loopingEmailPerDoc])
+			
+			if (mustUseWAFirst == '1') {
+				'jika must use wa first'
                 tipeSaldo = 'WhatsApp Message'
 
                 'menggunakan saldo wa'
@@ -880,10 +893,13 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 def checkingSaldo(ArrayList<String> balmut, String tipeSaldo, int penggunaanSaldo) {
 	'jika balmutnya tidak ada value'
 	if (balmut.size() == 0) {
+		GlobalVariable.FlagFailed = 1
 		'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 			((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') +
 			';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via ') + tipeSaldo)
+		
+		GlobalVariable.FlagFailed = 1
 	} else {
 		'penggunaan saldo didapat dari ikuantitaas query balmut'
 		penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))

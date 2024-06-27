@@ -460,29 +460,28 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 }
 
 def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
-    'inisialisasi penggunaan saldo, pemotongan saldo, dan increment untuk ekbutuhan selanjutnya'
-    int penggunaanSaldo = 0
-
-    int pemotonganSaldo = 0
-
-    int increment
-
-    'inisialisasi balmut'
-    ArrayList<String> balmut = []
-
-    'inisialisasi tipe saldo'
-    String tipeSaldo
-
     'get email per doc splitting by enter'
     ArrayList<String> emailPerDoc = emailSigner.split('\\n', -1)
 
     'looping email per enter'
     for (loopingEmailPerDoc = 0; loopingEmailPerDoc < emailPerDoc.size(); loopingEmailPerDoc++) {
         'split per '
-
         'email'
         ArrayList<String> email = (emailPerDoc[loopingEmailPerDoc]).split(';', -1)
 
+		'inisialisasi arraylist balmut'
+		ArrayList<String> balmut = []
+	
+		'inisialisasi penggunaan saldo, pemotongan saldo, dan increment untuk kebutuhan selanjutnya'
+		int penggunaanSaldo = 0
+	
+		int pemotonganSaldo = 0
+	
+		int increment = 0
+	
+		'inisialisasi tipesaldo'
+		String tipeSaldo = ''
+		
         'looping'
         for (loopingEmail = 0; loopingEmail < email.size(); loopingEmail++) {
             'get email from nik'
@@ -504,9 +503,9 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
                 'get email service, full name, dan setting must use wa first'
                 emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, email[
                     loopingEmail])
-
-                'jika must use wa first'
-                if (mustUseWAFirst == '1') {
+				
+				if (mustUseWAFirst == '1') {
+					'jika must use wa first'
                     tipeSaldo = 'WhatsApp Message'
 
                     'menggunakan saldo wa'
@@ -529,7 +528,6 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 							penggunaanSaldo = checkingSaldo(balmut, tipeSaldo, penggunaanSaldo)
                         } else if (useWAMessage == '0') {
                             'jika use wa message 0, maka mengarah ke SMS'
-
                             'ke sms / wa'
                             SMSSetting = CustomKeywords.'connection.DataVerif.getSMSSetting'(conneSign, 'Send Document')
 

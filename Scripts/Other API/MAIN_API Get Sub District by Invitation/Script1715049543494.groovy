@@ -76,8 +76,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'Jika status codenya 0'
             if (statusCode == 0) {
-                if (GlobalVariable.checkStoreDB == 'Yes') {
-					
+                if (GlobalVariable.checkStoreDB == 'Yes') {	
 					'get data district dari DB'
 					ArrayList<String> result = CustomKeywords.'connection.APIOnly.getSubDistrict'(conneSign, findTestData(
 							excelPath).getValue(GlobalVariable.NumofColm, rowExcel('subDistrictName')), findTestData(excelPath).getValue(

@@ -1,12 +1,14 @@
 package connection
 
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.ResultSetMetaData
 import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
+
 
 class DataVerif {
 
@@ -603,6 +605,7 @@ class DataVerif {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select full_name from am_msuser where " + helperQuery + " = '" + valueUser + "'")
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -620,6 +623,8 @@ class DataVerif {
 
 		resultSet = stm.executeQuery("SELECT tbm.trx_no, mso.office_name, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), 'Use ' || msl.description, amm.full_name, '', '', '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_office mso on mso.id_ms_office = tbm.id_ms_office LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE msl.description = '" + usage + "' AND amm.full_name = '" + fullName + "' AND tbm.trx_date BETWEEN current_timestamp - interval '" + GlobalVariable.batasWaktu + " minutes' AND current_timestamp + interval '" + GlobalVariable.batasWaktu + " minutes' ORDER BY tbm.dtm_crt DESC;")
 		metadata = resultSet.metaData
+		WebUI.comment("SELECT tbm.trx_no, mso.office_name, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), 'Use ' || msl.description, amm.full_name, '', '', '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_office mso on mso.id_ms_office = tbm.id_ms_office LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE msl.description = '" + usage + "' AND amm.full_name = '" + fullName + "' AND tbm.trx_date BETWEEN current_timestamp - interval '" + GlobalVariable.batasWaktu + " minutes' AND current_timestamp + interval '" + GlobalVariable.batasWaktu + " minutes' ORDER BY tbm.dtm_crt DESC;")
+
 
 		columnCount = metadata.getColumnCount()
 
@@ -711,6 +716,7 @@ class DataVerif {
 
 		resultSet = stm.executeQuery("SELECT qty, tbm.id_ms_business_line, tbm.id_ms_office FROM tr_balance_mutation tbm LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = tbm.id_ms_tenant LEFT JOIN ms_useroftenant mot ON mot.id_ms_tenant = mt.id_ms_tenant LEFT JOIN am_msuser amu ON amu.id_ms_user = mot.id_ms_user LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE ((lov_trx_type = 158 OR lov_trx_type = 42 OR lov_trx_type = 41 OR lov_trx_type = 3 OR lov_trx_type = 44 OR lov_trx_type = 139 OR lov_trx_type = 142 OR lov_trx_type = 133)  AND (login_id = '" + value.toUpperCase() + "' OR tdh.ref_number = '" + value.toUpperCase() + "' OR amu.hashed_phone = encode(sha256('" + value.toUpperCase() + "'), 'hex')))  ORDER BY trx_date DESC LIMIT 1;")
 		metadata = resultSet.metaData
+		WebUI.comment("SELECT qty, tbm.id_ms_business_line, tbm.id_ms_office FROM tr_balance_mutation tbm LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = tbm.id_ms_tenant LEFT JOIN ms_useroftenant mot ON mot.id_ms_tenant = mt.id_ms_tenant LEFT JOIN am_msuser amu ON amu.id_ms_user = mot.id_ms_user LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE ((lov_trx_type = 158 OR lov_trx_type = 42 OR lov_trx_type = 41 OR lov_trx_type = 3 OR lov_trx_type = 44 OR lov_trx_type = 139 OR lov_trx_type = 142 OR lov_trx_type = 133)  AND (login_id = '" + value.toUpperCase() + "' OR tdh.ref_number = '" + value.toUpperCase() + "' OR amu.hashed_phone = encode(sha256('" + value.toUpperCase() + "'), 'hex')))  ORDER BY trx_date DESC LIMIT 1;")
 
 		columnCount = metadata.getColumnCount()
 
@@ -815,6 +821,55 @@ class DataVerif {
 			if (data.toString() == 'null') {
 				data = '0'
 			}
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+
+	@Keyword
+	getMustUseSMSFirst(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select must_use_sms_first from ms_tenant where tenant_code = '" + tenantCode + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data == null) {
+			data = '0'
+		}
+		data
+	}
+	
+	@Keyword
+	getSettingNotiftoSigners(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mts.setting_value from ms_tenant_settings mts left join ms_tenant mst on mts.id_ms_tenant = mst.id_ms_tenant left join ms_lov msl on mts.lov_setting_type = msl.id_lov where mst.tenant_code = '" + tenantCode + "' and msl.code = 'SEND_COMPLETE_SIGN_NOTIF_TO_SIGNERS'")
+			metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	getSettingNotiftoDocOwner(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mts.setting_value from ms_tenant_settings mts left join ms_tenant mst on mts.id_ms_tenant = mst.id_ms_tenant left join ms_lov msl on mts.lov_setting_type = msl.id_lov where mst.tenant_code = '" + tenantCode + "' and msl.code = 'SEND_COMPLETE_SIGN_NOTIF_TO_DOC_OWNER'")
+			metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
 		data

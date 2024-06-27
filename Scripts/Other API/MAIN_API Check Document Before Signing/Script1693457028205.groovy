@@ -29,7 +29,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         'set psre sesuai inputan excel per case'
         GlobalVariable.Psre = findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
-
+// set status expired =
+		
         'HIT API untuk get token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [('email') : findTestData(excelPathCheckDocBeforeSigning).getValue(
                         GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''), ('password') : findTestData(excelPathCheckDocBeforeSigning).getValue(
@@ -55,6 +56,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
                 'get  doc id'
+				//ambil apapun dari apinyaa
                 docId = WS.getElementPropertyValue(respon, 'listCheckDocumentBeforeSigning.documentId', FailureHandling.OPTIONAL)
 
                 'get  signing Process'
@@ -77,7 +79,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                         'verify status'
                         arrayMatch.add(WebUI.verifyMatch(signingProcess[index], resultDB[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-                    }
+//di verif cert status
+					}
                     
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {

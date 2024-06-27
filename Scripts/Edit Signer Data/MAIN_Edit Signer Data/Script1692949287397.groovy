@@ -5,6 +5,8 @@ import java.sql.Connection as Connection
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
+import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
+import org.openqa.selenium.By as By
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
@@ -72,6 +74,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         
         'search data menggunakan email'
         searchData(emailOrNIKExcel)
+		
+		verifyListData(emailOrNIKExcel, conneSign)
 
         'Jika aksi Edit Data'
         if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
@@ -543,4 +547,38 @@ def verifyAfterEdit() {
 
 def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}
+
+def verifyListData(String emailOrNIKExcel, Connection conneSign) {
+	'resultdb'
+	resultDB = CustomKeywords.'connection.PencarianPengguna.getListPencarianPenggunaPelanggan'(conneSign, emailOrNIKExcel)
+
+	'inisialisasi index'
+	arrayIndex = 0
+
+	'get column'
+	variableColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry-user > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper:nth-child(1) > datatable-body-row > div.datatable-row-center.datatable-row-group.ng-star-inserted datatable-body-cell'))
+
+	'get row'
+	variableRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry-user > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+
+	'looping row'
+	for (loopingRow = 1; loopingRow <= variableRow.size(); loopingRow++) {
+		'looping column'
+		for (loopingCol = 1; loopingCol <= variableColumn.size(); loopingCol++) {
+			'modify per row dan column.'
+			modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'),
+				'xpath', 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-inquiry-user/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+				loopingRow) + ']/datatable-body-row/div[2]/datatable-body-cell[') + loopingCol) + ']/div', true)
+
+			'jika di column aksi'
+			if (loopingCol == variableColumn.size()) {
+				continue
+			} else {
+				'verify'
+				checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), resultDB[arrayIndex++],
+						false, FailureHandling.CONTINUE_ON_FAILURE), ' pada kolom ke- ' + loopingCol)
+			}
+		}
+	}
 }

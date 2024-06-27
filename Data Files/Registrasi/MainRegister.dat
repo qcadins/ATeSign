@@ -3,7 +3,6 @@
    <description></description>
    <name>MainRegister</name>
    <tag></tag>
-   <connectionProperties/>
    <containsHeaders>false</containsHeaders>
    <csvSeperator></csvSeperator>
    <dataFileGUID>424fcf9e-a81a-43a0-900b-219922292988</dataFileGUID>

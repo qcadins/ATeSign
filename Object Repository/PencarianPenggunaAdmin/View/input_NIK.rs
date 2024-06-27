@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_ResetOTP</name>
+   <name>input_NIK</name>
    <tag></tag>
-   <elementGuidId>340c26a1-229b-40fe-a1af-763cb6500261</elementGuidId>
+   <elementGuidId>a42f20b5-83bd-441e-917e-27b0bdab70a4</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'datatable-scroll ng-star-inserted']/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[7]/div/a[2]/em</value>
+         <value>//*[@id=&quot;nik&quot;]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@class = 'datatable-scroll ng-star-inserted']/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[7]/div/a[2]/em</value>
-      <webElementGuid>592f0c39-60ad-483b-92e4-bab175ba9ed1</webElementGuid>
+      <value>//*[@id=&quot;nik&quot;]</value>
+      <webElementGuid>d6401d68-90e6-42be-a3d7-cfa57d26eab7</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

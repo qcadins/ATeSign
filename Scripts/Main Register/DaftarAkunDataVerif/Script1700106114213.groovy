@@ -13,14 +13,14 @@ import internal.GlobalVariable as GlobalVariable
 'setting untuk membuat lokasi default folder download'
 HashMap<String, String> chromePrefs = [:]
 
-chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '\\Download')
+chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '\\Download\\File')
 
 chromePrefs.put('profile.default_content_setting_values.media_stream_camera', 1)
 
 RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 
 'declare userDir'
-String userDir = System.getProperty('user.dir')
+String userDir = System.getProperty('user.dir')+ '\\File'
 
 'check if ingin menggunakan embed atau tidak'
 if (GlobalVariable.RunWithEmbed == 'Yes') {

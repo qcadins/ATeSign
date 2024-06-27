@@ -86,6 +86,9 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(Global
 'verify tenant code'
 arrayMatch.add(WebUI.verifyMatch(GlobalVariable.Tenant.toUpperCase(), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
+'verify is active'
+arrayMatch.add(WebUI.verifyMatch('1', result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'

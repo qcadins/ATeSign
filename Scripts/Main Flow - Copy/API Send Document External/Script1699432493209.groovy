@@ -665,19 +665,6 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 }
 
 def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
-    'inisialisasi arraylist balmut'
-    ArrayList<String> balmut = []
-
-    'inisialisasi penggunaan saldo, pemotongan saldo, dan increment untuk kebutuhan selanjutnya'
-    int penggunaanSaldo = 0
-
-    int pemotonganSaldo = 0
-
-    int increment
-
-    'inisialisasi tipesaldo'
-    String tipeSaldo
-
     'get email per document menggunakan email signer yang diplit enter'
     ArrayList<String> emailPerDoc = emailSigner.split('\\n', -1)
 
@@ -686,6 +673,18 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
         'split lagi per ;'
         ArrayList<String> email = (emailPerDoc[loopingEmailPerDoc]).split(';', -1)
 
+		'inisialisasi arraylist balmut'
+		ArrayList<String> balmut = []
+	
+		'inisialisasi penggunaan saldo, pemotongan saldo, dan increment untuk kebutuhan selanjutnya'
+		int penggunaanSaldo = 0
+	
+		int pemotonganSaldo = 0
+	
+		int increment = 0
+	
+		'inisialisasi tipesaldo'
+		String tipeSaldo = ''
         'looping email per '
         for (loopingEmail = 0; loopingEmail < email.size(); loopingEmail++) {
             'get email dari nik/notelp/email tersebut'
@@ -713,7 +712,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
                 'jika must use wa first'
                 if (mustUseWAFirst == '1') {
                     'tipe saldonya menjadi wa'
-                    tipeSaldo = 'WhatsApp Message'
+                    tipeSaldo = 'WhatsApp Message'checkingSaldo
 
                     'menggunakan saldo wa'
                     balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)

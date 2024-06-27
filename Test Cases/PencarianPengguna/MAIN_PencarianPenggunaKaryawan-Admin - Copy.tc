@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_PencarianPenggunaKaryawan-Admin - Copy</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>df8b625c-5aa7-4f61-8b35-402fef694162</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>60eb3879-252e-47b6-880e-4fda5e5bb19d</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>e1da9b56-2b78-4dba-8fb2-ec146d196cfb</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'PencarianPengguna/PencarianPengguna-Karyawan'</defaultValue>
+      <description></description>
+      <id>60eb3879-252e-47b6-880e-4fda5e5bb19d</id>
+      <masked>false</masked>
+      <name>excelPathPencarianPengguna</name>
+   </variable>
+   <variable>
+      <defaultValue>'PencarianPengguna-Karyawan'</defaultValue>
+      <description></description>
+      <id>e1da9b56-2b78-4dba-8fb2-ec146d196cfb</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

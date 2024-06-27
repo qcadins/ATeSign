@@ -9,6 +9,7 @@ import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
+
 class APIFullService {
 
 	String data, helperQuery
@@ -25,7 +26,7 @@ class APIFullService {
 	getGenInvLink(Connection conn, String tenant, String phone, String idno) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tril.usr_crt, tril.gender, tril.kelurahan, tril.kecamatan, tril.kota, tril.zip_code, tril.date_of_birth, tril.place_of_birth, tril.provinsi, tril.email, tril.id_no, tril.phone, tril.address, tril.full_name, mst.tenant_code from tr_invitation_link as tril join ms_tenant as mst on tril.id_ms_tenant = mst.id_ms_tenant where tril.is_active = '1' and mst.tenant_code = '" + tenant + "' and tril.phone = '" + phone + "' and tril.id_no = '" + idno + "' ORDER BY tril.dtm_crt desc")
+		resultSet = stm.executeQuery("select tril.usr_crt, tril.gender, tril.kelurahan, tril.kecamatan, tril.kota, tril.zip_code, tril.date_of_birth, tril.place_of_birth, tril.provinsi, tril.email, tril.id_no, tril.phone, tril.address, tril.full_name, mst.tenant_code, tril.is_active from tr_invitation_link as tril join ms_tenant as mst on tril.id_ms_tenant = mst.id_ms_tenant where tril.is_active = '1' and mst.tenant_code = '" + tenant + "' and tril.phone = '" + phone + "' and tril.id_no = '" + idno + "' ORDER BY tril.dtm_crt desc")
 
 		metadata = resultSet.metaData
 
@@ -579,6 +580,7 @@ class APIFullService {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select msl.description from tr_document_d tdd join ms_lov msl on tdd.lov_payment_sign_type = msl.id_lov join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '" + refnumber + "'")
+		WebUI.comment("select msl.description from tr_document_d tdd join ms_lov msl on tdd.lov_payment_sign_type = msl.id_lov join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '" + refnumber + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -945,6 +947,7 @@ class APIFullService {
 		stm = conn.createStatement()
 		helperResult = stm.executeQuery("select tdd.is_sequence from tr_Document_d tdd left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h WHERE tdd.document_id = '" + value + "' OR tdh.ref_number = '" + value + "'")
 		metadata = helperResult.metaData
+		WebUI.comment("select tdd.is_sequence from tr_Document_d tdd left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h WHERE tdd.document_id = '" + value + "' OR tdh.ref_number = '" + value + "'")
 
 		columnCount = metadata.getColumnCount()
 
@@ -960,6 +963,7 @@ class APIFullService {
 
 		helperResult = stm.executeQuery("select id_ms_doc_template from tr_Document_d tdd left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h WHERE tdd.document_id = '" + value + "' OR tdh.ref_number = '" + value + "'")
 		metadata = helperResult.metaData
+		WebUI.comment("select id_ms_doc_template from tr_Document_d tdd left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h WHERE tdd.document_id = '" + value + "' OR tdh.ref_number = '" + value + "'")
 
 		columnCount = metadata.getColumnCount()
 
@@ -979,6 +983,8 @@ class APIFullService {
 
 		resultSet = stm.executeQuery("SELECT STRING_AGG(login_id, ';' ORDER BY seq_no) AS aa FROM (SELECT DISTINCT tdds.id_ms_user,au.login_id, FIRST_VALUE(" + helperQuery + ") OVER (PARTITION BY tdds.id_ms_user ORDER BY tdds.seq_no) AS seq_no FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user LEFT JOIN ms_doc_template mdt on tdd.id_ms_doc_template = mdt.id_doc_template WHERE (tdd.document_id = '" + value + "' OR tdh.ref_number = '" + value + "') AND (tdd.document_name = '" + documentName + "' OR mdt.doc_template_name = '" + documentName + "')) AS alls;")
 		metadata = resultSet.metaData
+		WebUI.comment("SELECT STRING_AGG(login_id, ';' ORDER BY seq_no) AS aa FROM (SELECT DISTINCT tdds.id_ms_user,au.login_id, FIRST_VALUE(" + helperQuery + ") OVER (PARTITION BY tdds.id_ms_user ORDER BY tdds.seq_no) AS seq_no FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user LEFT JOIN ms_doc_template mdt on tdd.id_ms_doc_template = mdt.id_doc_template WHERE (tdd.document_id = '" + value + "' OR tdh.ref_number = '" + value + "') AND (tdd.document_name = '" + documentName + "' OR mdt.doc_template_name = '" + documentName + "')) AS alls;")
+
 
 		columnCount = metadata.getColumnCount()
 
@@ -2257,7 +2263,8 @@ class APIFullService {
 		if (update.checkNotifTypeExistforTenant(conn) > 0) {
 			stm = conn.createStatement()
 
-			resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN (SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '" + userEmail + "' OR amm.hashed_phone = '" + userEmail + "' OR amm.hashed_id_no = '" + userEmail + "' LIMIT 1) = '0' THEN 'Email' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WhatsApp Message' ELSE 'SMS Notif' END END END AS result FROM ms_notificationtypeoftenant mntot LEFT JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE msl.code = '" + code + "' and mst.tenant_code = '" + tenantCode + "';")
+			resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_sms_first = '1' THEN 'SMS Notif' ELSE CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN (SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '" + userEmail + "' OR amm.hashed_phone = '" + userEmail + "' OR amm.hashed_id_no = '" + userEmail + "' LIMIT 1) = '0' THEN 'Email' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WhatsApp Message' ELSE 'SMS Notif' END END END END AS result FROM ms_notificationtypeoftenant mntot LEFT JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE msl.code = '" + code + "' and mst.tenant_code = '" + tenantCode + "';")
+
 			metadata = resultSet.metaData
 
 			columnCount = metadata.getColumnCount()

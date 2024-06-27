@@ -123,7 +123,7 @@ def funcSaldoSign(HashMap result) {
 	'jika vendornya bukan privy dan bukan digisng'
 	if (!vendor.equalsIgnoreCase('Privy') && !vendor.equalsIgnoreCase('DIGISIGN')) {
 		'list data saldo yang perlu diambil'
-		saldoList = ['Liveness', 'Face Compare', 'Liveness Face Compare', 'OTP']
+		saldoList = ['OTP', 'Liveness','Face Compare', 'Liveness Face Compare']
 		
 		'vendor verifikasi open ESIGN ADINS lagi'
 		vendorVerifikasi = 'ESIGN/ADINS'
@@ -177,27 +177,27 @@ def funcSaldoStamp(HashMap result) {
 }
 
 def funcFindSaldo(HashMap result, String vendorVerifikasi, ArrayList saldoList, boolean forAutosign) {
-	'klik ddl untuk tenant memilih mengenai Vida'
+	// Select option by label in dropdown for vendor verification
 	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), '(?i)' + vendorVerifikasi, true)
 	
-	'get total div di Saldo'
+	// Get total div elements in Saldo section
 	variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div > div'))
 	
 	for (int i = 0; i < saldoList.size(); i++) {
-		'looping berdasarkan total div yang ada di saldo'
+		// Loop through each saldo item in saldoList
 		for (int c = 2; c <= variableDivSaldo.size(); c++) {
-			'modify object mengenai find tipe saldo'
-			modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' +
-				c) + ']/div/div/div/div/div[1]', true)
-	
-			'verifikasi label saldonya '
+			// Modify object property to find saldo type
+			modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals',
+				('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + c + ']/div/div/div/div/div[1]'), true)
+			
+			// Verify element text matches saldoList[i]
 			if (WebUI.verifyElementText(modifyObjectFindSaldoSign, saldoList[i], FailureHandling.OPTIONAL)) {
-				'modify object mengenai ambil total jumlah saldo'
+				// Modify object property to fetch total saldo amount
 				modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals',
-					('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + c) + ']/div/div/div/div/div[2]',
-					true)
+					('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + c + ']/div/div/div/div/div[2]'), true)
 				
-				if (forAutosign == true) {
+				// Store saldo information in result HashMap
+				if (forAutosign) {
 					result.put(vendor, WebUI.getText(modifyObjecttotalSaldoSign).replace(',', ''))
 				} else {
 					result.put(saldoList[i], WebUI.getText(modifyObjecttotalSaldoSign).replace(',', ''))
@@ -205,6 +205,9 @@ def funcFindSaldo(HashMap result, String vendorVerifikasi, ArrayList saldoList, 
 			}
 		}
 	}
+	
+	// Print variableDivSaldo for debugging purposes
+	System.out.println(variableDivSaldo)
 }
 
 def funcSaldoRegis(HashMap result) {

@@ -605,7 +605,7 @@ class SendSign {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getOTPFromUser(Connection conn, String loginId) {
 		stm = conn.createStatement()
@@ -705,5 +705,41 @@ class SendSign {
 			}
 			data
 		}
+	}
+	
+	@Keyword
+	getEmailServiceWithEmail(Connection conn, String documentId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select msvr.signer_registered_email from tr_document_d_sign tdds left join tr_document_d tdd on tdd.id_document_d = tdds.id_document_d left join am_msuser amm on tdds.id_ms_user = amm.id_ms_user left join ms_vendor_registered_user msvr on msvr.id_ms_user =  amm.id_ms_user where tdd.document_id = '" + documentId + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	
+	@Keyword
+	getEmailUserRequestBy(Connection conn, String documentId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select msvr.signer_registered_email from tr_document_h tdh left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h left join am_msuser amm on tdh.id_msuser_request_by = amm.id_ms_user left join ms_vendor_registered_user msvr on msvr.id_ms_user =  amm.id_ms_user where tdd.document_id = '" + documentId + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
 	}
 }

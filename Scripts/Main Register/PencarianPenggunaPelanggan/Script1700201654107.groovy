@@ -64,6 +64,8 @@ if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/noDataWarning'),
         (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
         ';') + 'Hasil Pencarian tidak ada')
 } else {
+	
+
     'check if View / reset OTP'
     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Check Pencarian Pengguna')).equalsIgnoreCase(
         'View')) {

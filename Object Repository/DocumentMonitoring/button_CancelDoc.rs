@@ -6,14 +6,22 @@
    <elementGuidId>3f69d9f9-24f9-415a-a28c-4c8230de2711</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>BASIC</key>
+         <key>XPATH</key>
          <value></value>
       </entry>
       <entry>
-         <key>XPATH</key>
-         <value>//*[@id=&quot;listDokumen&quot;]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[10]/div/a[7]/em</value>
+         <key>BASIC</key>
+         <value>//*[@title = 'Batalkan TTD Digital' or @title = 'Cancel Document']</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@title = 'Batalkan TTD Digital' or @title = 'Cancel Document']</value>
+      <webElementGuid>ba2f113e-8754-48a3-8131-16053639d049</webElementGuid>
+   </webElementProperties>
 </WebElementEntity>
