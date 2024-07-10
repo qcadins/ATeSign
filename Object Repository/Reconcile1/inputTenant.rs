@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>lbl_popup</name>
+   <name>inputTenant</name>
    <tag></tag>
-   <elementGuidId>10e75d7f-6af2-420c-a9c4-62404b58132c</elementGuidId>
+   <elementGuidId>0555667c-2df0-4cd8-8095-e26a67923768</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;swal2-content&quot;]</value>
-      </entry>
-      <entry>
-         <key>CSS</key>
+         <value>//*[@id=&quot;tenantCode&quot;]/div/div/div[2]/input</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -20,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;swal2-content&quot;]</value>
-      <webElementGuid>685f1110-9264-4286-93a3-e2ec0e1baf21</webElementGuid>
+      <value>//*[@id=&quot;tenantCode&quot;]/div/div/div[2]/input</value>
+      <webElementGuid>86775e1f-da7a-4c41-ad0a-3f17d5296ae9</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

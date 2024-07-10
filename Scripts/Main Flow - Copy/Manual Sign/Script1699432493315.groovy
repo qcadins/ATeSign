@@ -799,7 +799,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSignerFull) {
 		
         if (notifTypeDB == '0' || notifTypeDB == 'Level Tenant') {
 			//perubahan change 4.6
-			mustUseSMSFirst = CustomKeywords.'connection.DataVerif.getMustUseSMSFirst'(conneSign, GlobalVariable.Tenant)
+			//mustUseSMSFirst = CustomKeywords.'connection.DataVerif.getMustUseSMSFirst'(conneSign, GlobalVariable.Tenant)
 			
 			mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
 

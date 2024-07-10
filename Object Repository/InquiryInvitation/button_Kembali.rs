@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_Kembali</name>
+   <tag></tag>
+   <elementGuidId>d54794c2-dd49-4b5d-a08a-cf5d29e91381</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[(text() = 'Kembali' or . = 'Kembali')]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-edit-user/div[2]/div/div/div/div/form/div[9]/button[1]</value>
+      <webElementGuid>32a79efd-c244-474c-9d50-23ee09fd5441</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Kembali</value>
+      <webElementGuid>44919863-bf57-41ce-acf9-a7cd9fc7f0d8</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

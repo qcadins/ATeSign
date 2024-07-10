@@ -902,25 +902,39 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
 }
 
 def checkPopup() {
-    WebUI.delay(0.25)
+	WebUI.delay(0.25)
 
-    'Jika popup muncul'
-    if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'label popup diambil'
-        lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
+	'Jika popup muncul'
+	if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup2'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'label popup diambil'
+		lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup2'), FailureHandling.CONTINUE_ON_FAILURE)
 
-        if (!(lblpopup.contains('Kode OTP salah'))) {
-            'Tulis di excel sebagai failed dan error.'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                    '-', '') + ';') + '<') + lblpopup) + '>')
+		if (!(lblpopup.contains('Kode OTP salah'))) {
+			'Tulis di excel sebagai failed dan error.'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+					'-', '') + ';') + '<') + lblpopup) + '>')
 
-            return true
-        }
-        
-        'Klik OK untuk popupnya'
-        WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
-    }
+			return true
+		}
+		'PERUBAHAN 4.6 ada tambahan dari PERUBAHAN 4.8'
+		if ((lblpopup.contains('registrasi ulang'))) {
+			WebUI.click(findTestObject('KotakMasuk/Sign/button_Tidak'))
+			'Tulis di excel sebagai failed dan error.'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
+				(((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+					'-', '') + ';'))))
+
+			'click Yes'
+			
+			'Registrasi'
+			//calltestcase regis
+			
+			return true
+		} else
+		'Klik OK untuk popupnya'
+		WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
+	}
 }
 
 def checkKonfirmasiTTD() {
@@ -1000,24 +1014,39 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
 
 def checkPopupWarning() {
     'Jika popup muncul'
-    if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+    if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup2'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         'label popup diambil'
-        lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
-
+        lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup2'), FailureHandling.CONTINUE_ON_FAILURE)
+		
         'Tulis di excel sebagai failed dan error.'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning, 
             (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                 '-', '') + ';') + '<') + lblpopup) + '>')
 
+		if ((lblpopup.contains('registrasi ulang'))) {
+			WebUI.click(findTestObject('KotakMasuk/Sign/button_Tidak'))
+			'Tulis di excel sebagai failed dan error.'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
+				(((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+					'-', '') + ';'))))
+
+			'click Yes'
+			
+			'Registrasi'
+			//calltestcase regis
+			
+			return true
+		} else {
+		
         'Klik OK untuk popupnya'
         WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'), FailureHandling.OPTIONAL)
 
         'Klik checkbox ttd untuk semua'
         WebUI.click(findTestObject('KotakMasuk/Sign/checkbox_ttdsemua'))
-
+		}
         true
     }
-    
+
     false
 }
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>Get List Data Pengguna</name>
+   <name>Get List BalanceType Rekon</name>
    <tag></tag>
-   <elementGuidId>b6c02d9e-bef2-4eb7-b29a-3ce620bcd34b</elementGuidId>
+   <elementGuidId>f3e87627-7483-4ea6-a842-f61b5379072d</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <autoUpdateContent>false</autoUpdateContent>
@@ -11,7 +11,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\&quot;loginId\&quot;:\&quot;${loginId}\&quot;,\&quot;audit\&quot;:{\&quot;callerId\&quot;:\&quot;${callerId}\&quot;},\&quot;tenantCode\&quot;:\&quot;${tenantCode}\&quot;}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;vendorCode\&quot;: \&quot;${vendorCode}\&quot;,\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    }\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -22,7 +22,15 @@
       <name>Accept</name>
       <type>Main</type>
       <value>application/json, text/plain, */*</value>
-      <webElementGuid>2f1a1c82-2281-4104-8757-4a2648acc56a</webElementGuid>
+      <webElementGuid>329c1b27-c027-4db2-8203-cb2f78ed1bd1</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Accept-Language</name>
+      <type>Main</type>
+      <value>en-US,en;q=0.9</value>
+      <webElementGuid>72ba3331-c6f1-43f6-858f-75e5a228221d</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -30,7 +38,15 @@
       <name>Authorization</name>
       <type>Main</type>
       <value>Bearer ${token}</value>
-      <webElementGuid>cd2c20e4-4a63-4ae6-b246-18f67a3bd5bd</webElementGuid>
+      <webElementGuid>85cd8547-225d-45d6-b9b2-0ddf18b010a9</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Connection</name>
+      <type>Main</type>
+      <value>keep-alive</value>
+      <webElementGuid>0a03c154-4694-41ec-abb4-aa30ac0c4825</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -38,13 +54,37 @@
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>1d6de97e-93cd-4285-833b-a800e6708f9c</webElementGuid>
+      <webElementGuid>ab684e7b-fb26-4d1b-b7a0-6a740ac02279</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Origin</name>
+      <type>Main</type>
+      <value>http://gdkwebsvr:8080</value>
+      <webElementGuid>82754253-6a1f-46a9-9885-14f1e3500232</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Referer</name>
+      <type>Main</type>
+      <value>http://gdkwebsvr:8080/</value>
+      <webElementGuid>f504bdcd-b0cf-4433-8c59-9be016c76f52</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>User-Agent</name>
+      <type>Main</type>
+      <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36</value>
+      <webElementGuid>f9eaa86c-06b0-42a6-9205-569e51eea2e7</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>9.0.0</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/user-management/s/getListDataPengguna</restUrl>
+   <restUrl>${base_url}/services/saldo/s/getListBalanceType</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -56,14 +96,14 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>b341fa64-45bf-447d-b1be-30a148a38c6a</id>
+      <id>90338fa4-0705-45c7-b080-6af9635df493</id>
       <masked>false</masked>
       <name>base_url</name>
    </variables>
    <variables>
       <defaultValue>GlobalVariable.token</defaultValue>
       <description></description>
-      <id>5ee20b6d-3916-4e51-a9b9-c606ad1d9972</id>
+      <id>dca2d8a3-101e-4881-b62c-386fb55bdea1</id>
       <masked>false</masked>
       <name>token</name>
    </variables>

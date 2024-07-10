@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Get Tenant Rekon2</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>ed02d895-82f3-44bb-a961-9a2bea00ebd9</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>7a62391e-2b46-4afa-955e-a478336e7c3c</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>d1cf7cde-4d78-4b97-b5a1-a41834fd826d</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Get Tenant Rekon2'</defaultValue>
+      <description></description>
+      <id>7a62391e-2b46-4afa-955e-a478336e7c3c</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Get Tenant Rekon2'</defaultValue>
+      <description></description>
+      <id>d1cf7cde-4d78-4b97-b5a1-a41834fd826d</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

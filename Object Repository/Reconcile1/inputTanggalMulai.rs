@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>lbl_popup</name>
+   <name>inputTanggalMulai</name>
    <tag></tag>
-   <elementGuidId>10e75d7f-6af2-420c-a9c4-62404b58132c</elementGuidId>
+   <elementGuidId>bb63c569-89f2-4db5-9bb0-ebc2b68dd936</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;swal2-content&quot;]</value>
-      </entry>
-      <entry>
-         <key>CSS</key>
+         <value>//*[@id = 'startDate']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>id</name>
       <type>Main</type>
-      <value>//*[@id=&quot;swal2-content&quot;]</value>
-      <webElementGuid>685f1110-9264-4286-93a3-e2ec0e1baf21</webElementGuid>
+      <value>startDate</value>
+      <webElementGuid>de4556c3-0234-4c94-afe0-bb3a8aa5fbb2</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

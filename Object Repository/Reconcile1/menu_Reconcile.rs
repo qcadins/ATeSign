@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>lbl_popup</name>
+   <name>menu_Reconcile</name>
    <tag></tag>
-   <elementGuidId>10e75d7f-6af2-420c-a9c4-62404b58132c</elementGuidId>
+   <elementGuidId>1067ea5b-7d87-463a-8ad8-5b4f77612f6f</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;swal2-content&quot;]</value>
-      </entry>
-      <entry>
-         <key>CSS</key>
+         <value>//*[@href = '/reconcile']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>href</name>
       <type>Main</type>
-      <value>//*[@id=&quot;swal2-content&quot;]</value>
-      <webElementGuid>685f1110-9264-4286-93a3-e2ec0e1baf21</webElementGuid>
+      <value>/reconcile</value>
+      <webElementGuid>d0c15f4a-b198-4cd3-b4f4-ef0c95af5bb5</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>lbl_popup2</name>
+   <tag></tag>
+   <elementGuidId>3aa17786-549e-4be1-b30a-dd509411a170</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@class = 'col-12 text-center' and (text() = 'Sertifikat elektronik anda untuk PSrE VIDA sudah kadaluarsa, harap lakukan registrasi ulang' or . = 'Sertifikat elektronik anda untuk PSrE VIDA sudah kadaluarsa, harap lakukan registrasi ulang')]</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//app-certificate-expired-regenerate-inv-link/div/div/div</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>div.col-12.text-center</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>div</value>
+      <webElementGuid>bfdada17-a79b-43f1-bd4e-aef79f3077d5</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>col-12 text-center</value>
+      <webElementGuid>d73bce8a-5f60-4ca6-a7c6-343030babe64</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>contains</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Sertifikat elektronik anda untuk PSrE VIDA sudah kadaluarsa, harap lakukan registrasi ulang</value>
+      <webElementGuid>ae4e6696-5d9c-4cfe-bfd3-5c1942fa63dc</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html[1]/body[@class=&quot;vertical-layout navbar-static menu-expanded menu-open vertical-menu modal-open pace-done&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog&quot;]/div[@class=&quot;modal-content&quot;]/app-certificate-expired-regenerate-inv-link[1]/div[@class=&quot;modal-body&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-12 text-center&quot;]</value>
+      <webElementGuid>b1d64af3-b226-46f8-aea8-a686068e8d69</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//app-certificate-expired-regenerate-inv-link/div/div/div</value>
+      <webElementGuid>d22c26f1-dc14-4387-8fec-a8f822c67d20</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//div[(text() = 'Sertifikat Elektronik KadarluarsaSertifikat elektronik anda untuk PSrE VIDA sudah kadaluarsa, harap lakukan registrasi ulang.Apakah anda ingin melakukan registrasi ulang?' or . = 'Sertifikat Elektronik KadarluarsaSertifikat elektronik anda untuk PSrE VIDA sudah kadaluarsa, harap lakukan registrasi ulang.Apakah anda ingin melakukan registrasi ulang?')]</value>
+      <webElementGuid>f4797e9f-1081-49cb-9abb-3ee758fa3437</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>
